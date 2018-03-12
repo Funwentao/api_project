@@ -1,0 +1,46 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+
+module.exports = {
+    entry: {
+        qr:'./src/js/container/qr.js'
+    },
+    output: {
+        path: __dirname+"/dist",
+        filename: "[name].js",
+        publicPath: "/"
+    },
+    module: {
+        loaders: [
+            {
+                test:/\.js$/,
+                exclude:/node_modules/,
+                use:{
+                    loader: "babel-loader",
+                    options: {
+                        presets: ['react', 'es2015','stage-0']
+                    }
+                }
+            }
+        ]
+    },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            output: {
+                comments: false,
+            },
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+        }),
+        new HtmlWebpackPlugin({
+            title: '二维码',
+            filename: '../view/qr.html',
+            template: './template.html',
+            chunks:['qr']
+        })
+    ]
+};
