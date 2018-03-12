@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import ReactDOM from 'react-dom';
 import QRcode from 'qrcode.react';
+import '../../style/qr.scss';
 
 class Qr extends Component{
     constructor(){

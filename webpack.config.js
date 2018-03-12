@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -24,12 +25,18 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: "style-loader!css-loader"
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader"
+                })
             },
             {
-                test:/\.sass$/,
-                loader: "style-loader!css-loader!sass-loader"
-            }
+                test: /\.scss/,
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: "css-loader!sass-loader"
+                })
+            },
         ]
     },
     plugins: [
@@ -42,6 +49,7 @@ module.exports = {
             filename: '../view/qr.html',
             template: './template.html',
             chunks:['qr']
-        })
+        }),
+        new ExtractTextPlugin('[name].css')
     ]
 };
