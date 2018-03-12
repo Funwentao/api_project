@@ -15,5 +15,18 @@
   "bugs": {
     "url": "https://github.com/Funwentao/api_project/issues"
   },
-  "homepage": "https://github.com/Funwentao/api_project#readme"
+  "homepage": "https://github.com/Funwentao/api_project#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-polyfill": "^6.26.0"
+  },
+  "dependencies": {
+    "koa": "^2.5.0",
+    "koa-body": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.5"
+  }
 }
