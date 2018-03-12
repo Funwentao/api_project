@@ -25,16 +25,9 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            output: {
-                comments: false,
-            },
-            compress: {
-                warnings: false
-            }
-        }),
+        new webpack.optimize.UglifyJsPlugin(),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+            'process.env.NODE_ENV': JSON.stringify('production')
         }),
         new HtmlWebpackPlugin({
             title: '二维码',
