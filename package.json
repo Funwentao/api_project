@@ -1,0 +1,19 @@
+{
+  "name": "api-project",
+  "version": "1.0.0",
+  "description": "api for my mini program",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Funwentao/api_project.git"
+  },
+  "author": "funwt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Funwentao/api_project/issues"
+  },
+  "homepage": "https://github.com/Funwentao/api_project#readme"
+}
