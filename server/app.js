@@ -3,9 +3,12 @@ import Router from 'koa-router';
 import parser from 'koa-bodyparser';
 import body from 'koa-body';
 import cors from 'koa2-cors';
+import views from 'koa-views';
+import staticServer from 'koa-static';
 import mongoConnection from './db/connection';
 
 import api from './routes/api';
+import routes from './routes/routes';
 
 const app = new Koa();
 
@@ -14,7 +17,11 @@ app
     .use(cors())
     .use(body({ multipart: true }))
     .use(parser({ multipart: true }))
-    .use(api(Router));
+    .use(views('../view'))
+    .use(api(Router))
+    .use(routes(Router))
+    .use(staticServer('../dist'))
+    .use(staticServer('../src'));
 
 (async()=>{
     try{
