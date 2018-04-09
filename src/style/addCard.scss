@@ -1,0 +1,18 @@
+.add-card{
+  cursor: pointer;
+  width: 250px;
+  height: 156px;
+  border-radius: 10px;
+  float: left;
+  margin-right: 20px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: #fff;
+  line-height: 156px;
+  text-align: center;
+  font-size: 56px;
+  color:#ccc;
+  &:hover{
+   color:#646c77;
+  }
+}

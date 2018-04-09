@@ -8,6 +8,12 @@ export default function (Router) {
         await ctx.render('qr');
     });
 
+    /**
+     * 登录注册
+     */
+    router.get('/',async(ctx,next) => {
+        await ctx.render('login');
+    });
 
     return router.routes();
 }
