@@ -7,7 +7,8 @@ class Card extends Component{
     }
     render(){
         return(
-            <div className="card">
+            <div className="card" onClick={this.props.showModal}>
+                {this.props.visible&&<a href="javascript:;" className="remove-btn">&times;</a>}
                 <p className={"course-name "+this.props.className}>{this.props.name}</p>
                 <div className="tips-content">
                     <div className="tips-item">

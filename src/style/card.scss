@@ -1,4 +1,5 @@
 .card{
+  position:relative;
   cursor: pointer;
   width: 250px;
   height: 156px;
@@ -7,6 +8,13 @@
   margin-right: 20px;
   overflow: hidden;
   margin-bottom: 20px;
+  .remove-btn{
+    position:absolute;
+    color:#fff;
+    right: 5px;
+    top:2px;
+    font-size: 18px;
+  }
   &:hover{
     transform: scale(1.05);
   }

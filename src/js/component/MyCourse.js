@@ -31,6 +31,8 @@ class MyCourse extends Component{
                                     tips2={e.tips2}
                                     value2={e.value2}
                                     className = {className}
+                                    visible={true}
+                                    showModal = {this.props.showModal}
                                 />
                             })
                         }
@@ -50,6 +52,8 @@ class MyCourse extends Component{
                                     tips2={e.tips2}
                                     value2={e.value2}
                                     className = {className}
+                                    visible={false}
+                                    showModal = {this.props.showModal}
                                 />
                             })
                         }
