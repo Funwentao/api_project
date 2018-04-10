@@ -2,17 +2,11 @@ import React,{Component} from 'react';
 import {Icon} from 'antd';
 import '../../style/addCard.scss';
 
-class AddCard extends Component{
-    constructor(){
-        super();
-    }
-    render(){
-        return(
-            <div className="add-card" onClick={this.props.showModal}>
-                <Icon type="plus"/>
-            </div>
-        )
-    }
-}
 
-export default AddCard;
+export default function AddCard(props){
+    return(
+        <div className="add-card" onClick={props.showModal}>
+            <Icon type="plus"/>
+        </div>
+    )
+}
