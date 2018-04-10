@@ -125,7 +125,7 @@ class StudentModal extends Component{
                         </Button>
                     </Upload>
                 </div>}
-                <div style={{textAlign:'right',marginBottom:20}}>
+                <div style={{marginBottom:20}}>
                     <Search
                         placeholder="input search text"
                         onSearch={value => console.log(value)}

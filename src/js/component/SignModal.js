@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
-import {Button,Table,message,Switch } from 'antd';
+import {Button,Table,message,Switch,Input} from 'antd';
+
+const Search = Input.Search;
 
 class SignModal extends Component{
     constructor(){
@@ -58,6 +60,15 @@ class SignModal extends Component{
                     <Button type='primary'>成功</Button>
                     <Button type='danger'>失败</Button>
                     <Button  type="primary" ghost style={{float:'right'}}>扫描签到</Button>
+                    <Button  type="danger" ghost style={{float:'right'}}>点名</Button>
+                </div>
+                <div style={{marginBottom:20}}>
+                    <Search
+                        placeholder="input search text"
+                        onSearch={value => console.log(value)}
+                        style={{ width: 300 }}
+                        enterButton
+                    />
                 </div>
                 <Table columns={columns} dataSource={data}/>
             </div>
