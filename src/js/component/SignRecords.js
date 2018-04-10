@@ -4,35 +4,17 @@ import SignModal from './SignModal';
 import Card from './Card';
 
 class SignRecords extends Component{
-    constructor(){
+    constructor() {
         super();
         this.state = {
-            course:[{
-                name:'离散数学',
-                tips1:'签到人数',
-                value1:'50人',
-                tips2:'签到成功',
-                value2:'20人'
+            course: [{
+                name: '离散数学',
+                tips1: '学年度',
+                value1: '2017-2018年上学期',
+                tips2: '学生人数',
+                value2: '20人'
             }]
-        }
-        this.showModal = this.showModal.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
-        this.handleOk = this.handleOk.bind(this);
-    }
-    showModal(){
-        this.setState({
-            visible:true
-        })
-    }
-    handleCancel(){
-        this.setState({
-            visible:false
-        })
-    }
-    handleOk(){
-        this.setState({
-            visible:false
-        })
+        };
     }
     render(){
         return(
@@ -50,7 +32,7 @@ class SignRecords extends Component{
                                     tips2={e.tips2}
                                     value2={e.value2}
                                     className = {className}
-                                    showModal = {this.showModal}
+                                    showModal = {this.props.toggleSignDetail}
                                 />
                             })
                         }
@@ -69,18 +51,12 @@ class SignRecords extends Component{
                                     tips2={e.tips2}
                                     value2={e.value2}
                                     className = {className}
-                                    showModal = {this.showModal}
+                                    showModal = {this.props.toggleSignDetail}
                                 />
                             })
                         }
                     </div>
                 </div>
-                <Modal title="Basic Modal"
-                       visible={this.state.visible}
-                       onOk={this.handleOk}
-                       onCancel={this.handleCancel}>
-                    <SignModal/>
-                </Modal>
             </div>
         )
     }
