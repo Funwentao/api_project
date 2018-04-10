@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
+import {Modal} from 'antd';
 import Card from './Card';
+import StudentModal from './StudentModal';
 
 class MyStudents extends Component{
     constructor(){
@@ -12,7 +14,25 @@ class MyStudents extends Component{
                 tips2:'学生人数',
                 value2:'20人'
             }]
-        }
+        };
+        this.showModal = this.showModal.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.handleOk = this.handleOk.bind(this);
+    }
+    showModal(){
+        this.setState({
+            visible:true
+        })
+    }
+    handleCancel(){
+        this.setState({
+            visible:false
+        })
+    }
+    handleOk(){
+        this.setState({
+            visible:false
+        })
     }
     render(){
         return(
@@ -30,6 +50,7 @@ class MyStudents extends Component{
                                     tips2={e.tips2}
                                     value2={e.value2}
                                     className = {className}
+                                    showModal = {this.showModal}
                                 />
                             })
                         }
@@ -48,11 +69,18 @@ class MyStudents extends Component{
                                     tips2={e.tips2}
                                     value2={e.value2}
                                     className = {className}
+                                    showModal = {this.showModal}
                                 />
                             })
                         }
                     </div>
                 </div>
+                <Modal title="Basic Modal"
+                       visible={this.state.visible}
+                       onOk={this.handleOk}
+                       onCancel={this.handleCancel}>
+                    <StudentModal/>
+                </Modal>
             </div>
         )
     }

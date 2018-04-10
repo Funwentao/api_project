@@ -1,4 +1,6 @@
 import React,{Component} from 'react';
+import {Modal} from 'antd';
+import SemesterModal from './SemesterModal';
 import Card from './Card';
 import AddCard from './AddCard';
 
@@ -14,6 +16,24 @@ class SemesterManagement extends Component{
                 value2:'2017/9/1'
             }]
         }
+        this.showModal = this.showModal.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.handleOk = this.handleOk.bind(this);
+    }
+    showModal(){
+        this.setState({
+            visible:true
+        })
+    }
+    handleCancel(){
+        this.setState({
+            visible:false
+        })
+    }
+    handleOk(){
+        this.setState({
+            visible:false
+        })
     }
     render(){
         return(
@@ -30,12 +50,20 @@ class SemesterManagement extends Component{
                                     tips2={e.tips2}
                                     value2={e.value2}
                                     className = {className}
+                                    visible = {true}
+                                    showModal = {this.showModal}
                                 />
                             })
                         }
                         <AddCard/>
                     </div>
                 </div>
+                <Modal title="Basic Modal"
+                       visible={this.state.visible}
+                       onOk={this.handleOk}
+                       onCancel={this.handleCancel}>
+                    <SemesterModal/>
+                </Modal>
             </div>
         )
     }

@@ -5,11 +5,6 @@ import MyHeader from './MyHeader';
 import MyCourse from './MyCourse';
 import MyStudents from './MyStudents';
 import SignRecords from './SignRecords';
-import CourseModal from './CourseModal';
-import StudentModal from  './StudentModal'
-import SignModal from './SignModal';
-import ScanQr from './ScanQr';
-import SemesterModal from './SemesterModal';
 import SemesterManagement from './SemesterManagement';
 import '../../style/home.scss';
 
@@ -84,7 +79,7 @@ class Home extends Component{
                 </Sider>
                 <Layout>
                     <Content style={{padding:20}}>
-                        {this.state.key==='1'&&<MyCourse showModal={this.showModal}/>}
+                        {this.state.key==='1'&&<MyCourse/>}
                         {this.state.key==='2'&&<MyStudents/>}
                         {this.state.key==='3'&&<SignRecords/>}
                         {this.state.key==='4'&&<SemesterManagement/>}
@@ -95,10 +90,7 @@ class Home extends Component{
                    visible={this.state.visible}
                    onOk={this.handleOk}
                    onCancel={this.handleCancel}>
-                <CourseModal/>
-                {/*<StudentModal/>*/}
-                {/*<SignModal/>*/}
-                {/*<SemesterModal/>*/}
+
             </Modal>
         </Layout>
         )

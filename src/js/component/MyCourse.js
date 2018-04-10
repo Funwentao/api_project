@@ -1,7 +1,8 @@
 import React,{Component} from 'react';
-import {Input } from 'antd';
+import {Input,Modal} from 'antd';
 import Card from './Card';
 import AddCard from './AddCard';
+import CourseModal from './CourseModal';
 
 const Search = Input.Search;
 
@@ -17,6 +18,24 @@ class MyCourse extends Component{
                 value2:'教学楼304'
             }]
         }
+        this.showModal = this.showModal.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.handleOk = this.handleOk.bind(this);
+    }
+    showModal(){
+        this.setState({
+            visible:true
+        })
+    }
+    handleCancel(){
+        this.setState({
+            visible:false
+        })
+    }
+    handleOk(){
+        this.setState({
+            visible:false
+        })
     }
     render(){
         return(
@@ -43,7 +62,7 @@ class MyCourse extends Component{
                                     value2={e.value2}
                                     className = {className}
                                     visible={true}
-                                    showModal = {this.props.showModal}
+                                    showModal = {this.showModal}
                                 />
                             })
                         }
@@ -64,12 +83,18 @@ class MyCourse extends Component{
                                     value2={e.value2}
                                     className = {className}
                                     visible={false}
-                                    showModal = {this.props.showModal}
+                                    showModal = {this.showModal}
                                 />
                             })
                         }
                     </div>
                 </div>
+                <Modal title="Basic Modal"
+                       visible={this.state.visible}
+                       onOk={this.handleOk}
+                       onCancel={this.handleCancel}>
+                    <CourseModal/>
+                </Modal>
             </div>
         )
     }
