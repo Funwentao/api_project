@@ -66,7 +66,7 @@ class MyCourse extends Component{
                                 />
                             })
                         }
-                        <AddCard/>
+                        <AddCard showModal = {this.showModal}/>
                     </div>
                 </div>
                 <div>

@@ -55,7 +55,7 @@ class SemesterManagement extends Component{
                                 />
                             })
                         }
-                        <AddCard/>
+                        <AddCard showModal = {this.showModal}/>
                     </div>
                 </div>
                 <Modal title="Basic Modal"

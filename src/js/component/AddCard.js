@@ -8,7 +8,7 @@ class AddCard extends Component{
     }
     render(){
         return(
-            <div className="add-card">
+            <div className="add-card" onClick={this.props.showModal}>
                 <Icon type="plus"/>
             </div>
         )
