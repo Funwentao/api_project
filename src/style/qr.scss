@@ -1,3 +1,9 @@
-body{
-  background: #ccc;
+.qr-content{
+  canvas{
+    display: block;
+    margin: 50px auto;
+  }
+  .btn-content{
+    text-align: center;
+  }
 }

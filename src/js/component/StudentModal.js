@@ -1,6 +1,9 @@
 import React,{Component} from 'react';
 import {Button,Table,Input,Upload,Icon,message} from 'antd';
 import '../../style/studentModal.scss';
+
+const Search = Input.Search;
+
 class StudentModal extends Component{
     constructor(){
         super();
@@ -122,6 +125,14 @@ class StudentModal extends Component{
                         </Button>
                     </Upload>
                 </div>}
+                <div style={{textAlign:'right',marginBottom:20}}>
+                    <Search
+                        placeholder="input search text"
+                        onSearch={value => console.log(value)}
+                        style={{ width: 300 }}
+                        enterButton
+                    />
+                </div>
                 <Table columns={columns} dataSource={data}/>
             </div>
         )

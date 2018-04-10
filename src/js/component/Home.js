@@ -7,6 +7,10 @@ import MyStudents from './MyStudents';
 import SignRecords from './SignRecords';
 import CourseModal from './CourseModal';
 import StudentModal from  './StudentModal'
+import SignModal from './SignModal';
+import ScanQr from './ScanQr';
+import SemesterModal from './SemesterModal';
+import SemesterManagement from './SemesterManagement';
 import '../../style/home.scss';
 
 
@@ -72,6 +76,10 @@ class Home extends Component{
                             <Icon type="form" />
                             <span>签到管理</span>
                         </Menu.Item>
+                        <Menu.Item key="4">
+                            <Icon type="setting" />
+                            <span>学期管理</span>
+                        </Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout>
@@ -79,6 +87,7 @@ class Home extends Component{
                         {this.state.key==='1'&&<MyCourse showModal={this.showModal}/>}
                         {this.state.key==='2'&&<MyStudents/>}
                         {this.state.key==='3'&&<SignRecords/>}
+                        {this.state.key==='4'&&<SemesterManagement/>}
                     </Content>
                 </Layout>
             </Layout>
@@ -86,8 +95,10 @@ class Home extends Component{
                    visible={this.state.visible}
                    onOk={this.handleOk}
                    onCancel={this.handleCancel}>
-                {/*<CourseModal/>*/}
-                <StudentModal/>
+                <CourseModal/>
+                {/*<StudentModal/>*/}
+                {/*<SignModal/>*/}
+                {/*<SemesterModal/>*/}
             </Modal>
         </Layout>
         )

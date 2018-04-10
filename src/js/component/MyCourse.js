@@ -1,6 +1,9 @@
 import React,{Component} from 'react';
+import {Input } from 'antd';
 import Card from './Card';
 import AddCard from './AddCard';
+
+const Search = Input.Search;
 
 class MyCourse extends Component{
     constructor(){
@@ -18,6 +21,14 @@ class MyCourse extends Component{
     render(){
         return(
             <div>
+                <div style={{textAlign:'center'}}>
+                    <Search
+                        placeholder="input search text"
+                        onSearch={value => console.log(value)}
+                        style={{ width: 300 }}
+                        enterButton
+                    />
+                </div>
                 <div>
                     <p>进行中的课程：</p>
                     <div style={{overflow:'hidden'}}>

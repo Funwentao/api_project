@@ -9,7 +9,7 @@ class AddCard extends Component{
     render(){
         return(
             <div className="add-card">
-                <Icon type="folder-add"/>
+                <Icon type="plus"/>
             </div>
         )
     }
