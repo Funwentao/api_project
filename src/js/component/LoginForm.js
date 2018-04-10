@@ -1,9 +1,10 @@
 import React,{Component} from 'react';
 import { Form, Icon, Input, Button } from 'antd';
 import fetch from 'isomorphic-fetch';
-const FormItem = Form.Item;
 import "../../style/login.scss";
 import {CONFIG} from "../constants/conifg";
+
+const FormItem = Form.Item;
 
 class NormalLoginForm extends Component {
     constructor(){

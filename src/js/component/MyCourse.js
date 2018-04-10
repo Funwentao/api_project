@@ -89,7 +89,7 @@ class MyCourse extends Component{
                         }
                     </div>
                 </div>
-                <Modal title="Basic Modal"
+                <Modal title="课程编辑"
                        visible={this.state.visible}
                        onOk={this.handleOk}
                        onCancel={this.handleCancel}>

@@ -75,7 +75,7 @@ class MyStudents extends Component{
                         }
                     </div>
                 </div>
-                <Modal title="Basic Modal"
+                <Modal title="学生详情"
                        visible={this.state.visible}
                        onOk={this.handleOk}
                        onCancel={this.handleCancel}>

@@ -5,6 +5,7 @@ import MyHeader from './MyHeader';
 import MyCourse from './MyCourse';
 import MyStudents from './MyStudents';
 import SignRecords from './SignRecords';
+import EditModal from './EditModal';
 import SemesterManagement from './SemesterManagement';
 import '../../style/home.scss';
 
@@ -48,7 +49,7 @@ class Home extends Component{
     return(
         <Layout>
             <Header className="header">
-                <MyHeader/>
+                <MyHeader showModal={this.showModal}/>
             </Header>
             <Layout>
                 <Sider width="256"
@@ -86,11 +87,11 @@ class Home extends Component{
                     </Content>
                 </Layout>
             </Layout>
-            <Modal title="Basic Modal"
+            <Modal title="修改密码"
                    visible={this.state.visible}
                    onOk={this.handleOk}
                    onCancel={this.handleCancel}>
-
+                <EditModal/>
             </Modal>
         </Layout>
         )
