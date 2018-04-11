@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Form,Input,Select,Button,Col} from 'antd';
+import {Form,Input,Select,Button,Col,Icon} from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -125,12 +125,12 @@ class CourseForm extends  Component{
                     label="上课时间："
                     {...formItemLayout}
                 >
-                    <Col span={2}>
+                    <Col span={3}>
                         <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
                             星期
                         </span>
                     </Col>
-                    <Col span={6}>
+                    <Col span={5}>
                         <FormItem >
                             {getFieldDecorator('week_number', {
                                 rules: [ {
@@ -146,7 +146,7 @@ class CourseForm extends  Component{
                             &nbsp;
                         </span>
                     </Col>
-                    <Col span={6}>
+                    <Col span={5}>
                         <FormItem >
                             <FormItem >
                                 {getFieldDecorator('start_class', {
@@ -164,7 +164,7 @@ class CourseForm extends  Component{
                             -
                         </span>
                     </Col>
-                    <Col span={6}>
+                    <Col span={5}>
                         <FormItem >
                             <FormItem >
                                 {getFieldDecorator('end_class', {
@@ -181,6 +181,11 @@ class CourseForm extends  Component{
                         <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
                             节
                         </span>
+                    </Col>
+                    <Col span={2}>
+                        <a style={{ display: 'inline-block', width: '100%', textAlign: 'center',color:'#000' }}>
+                            <Icon type="plus"/>
+                        </a>
                     </Col>
                 </FormItem>
                 <FormItem style={{textAlign:'center'}}>

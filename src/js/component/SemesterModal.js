@@ -18,7 +18,7 @@ class SemesterForm extends  Component{
     handleSubmit(e){
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            console.log(values);
+            console.log(JSON.stringify(values));
         });
     }
     startYearChange(e){
@@ -30,12 +30,6 @@ class SemesterForm extends  Component{
     }
     render(){
         const { getFieldDecorator } = this.props.form;
-        const week =['日','一','二','三','四','五','六'];
-        const array = [1,2,3,4,5,6,7,8,9,10,11,12];
-        const array2 = [13,14,15,16,17,18,19,20];
-        const optionGroup = array.map((e)=><Option value={e}>{e}</Option>);
-        const optionGroup2 = [...array,...array2].map((e)=><Option value={e}>{e}</Option>);
-        const weekGroup = week.map((e,i)=><Option value={i}>{e}</Option>)
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
