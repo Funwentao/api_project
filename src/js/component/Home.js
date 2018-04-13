@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import { Layout, Menu, Icon,Modal} from 'antd';
-const { Header, Content, Sider } = Layout;
 import MyHeader from './MyHeader';
 import MyCourse from './MyCourse';
 import MyStudents from './MyStudents';
@@ -10,7 +9,7 @@ import SemesterManagement from './SemesterManagement';
 import SignDetail from './SignDetail';
 import '../../style/home.scss';
 
-
+const { Header, Content, Sider } = Layout;
 
 class Home extends Component{
     constructor(){
@@ -18,7 +17,6 @@ class Home extends Component{
         this.state = {
             key:'1',
             visible:false,
-            modalType:''
         };
         this.menuChangeHandler = this.menuChangeHandler.bind(this);
         this.showModal = this.showModal.bind(this);

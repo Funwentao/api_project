@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import {Icon} from 'antd';
 import '../../style/card.scss';
 
 class Card extends Component{
@@ -6,9 +7,10 @@ class Card extends Component{
         super();
     }
     render(){
+        const {id} = this.props;
         return(
-            <div className="card" onClick={this.props.showModal}>
-                {this.props.visible&&<a href="javascript:;" className="remove-btn" onClick={(e)=>e.stopPropagation()}>&times;</a>}
+            <div className="card" onClick={()=>this.props.showModal(id)}>
+                {this.props.visible&&<a href="javascript:;" className="remove-btn" onClick={(e)=>e.stopPropagation()}><Icon type="close"/></a>}
                 <p className={"course-name "+this.props.className}>{this.props.name}</p>
                 <div className="tips-content">
                     <div className="tips-item">

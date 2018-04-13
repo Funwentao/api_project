@@ -15,5 +15,13 @@ export default function (Router) {
         await ctx.render('login');
     });
 
+    /**
+     * 首页
+     */
+    router.get('/home',async(ctx,next)=>{
+
+    });
+
+
     return router.routes();
 }

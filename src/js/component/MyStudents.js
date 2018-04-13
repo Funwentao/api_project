@@ -9,8 +9,8 @@ class MyStudents extends Component{
         this.state = {
             course:[{
                 name:'离散数学',
-                tips1:'限选人数',
-                value1:'50人',
+                tips1:'课程号',
+                value1:'123456',
                 tips2:'学生人数',
                 value2:'20人'
             }]

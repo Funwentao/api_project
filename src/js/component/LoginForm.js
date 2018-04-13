@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Icon, Input, Button,message} from 'antd';
 import fetch from 'isomorphic-fetch';
 import "../../style/login.scss";
 import {CONFIG} from "../constants/conifg";
@@ -20,7 +20,7 @@ class NormalLoginForm extends Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             const {server} = CONFIG;
-            const url = server + "/login"
+            const url = server + "/login";
             if (!err) {
                 fetch(url,{
                     method:'post',
@@ -28,21 +28,17 @@ class NormalLoginForm extends Component {
                         'Content-Type': 'application/json'
                     },
                     body:JSON.stringify(values),
-                    mode: 'cors'
-                }).then((res) => res.json())
-                    .then((data) =>{
-                        if(this.state.isLogin){
-                            if(data.status){
-                                sessionStorage.setItem('__token__', data.token)
-                                sessionStorage.setItem('__username__', data.userName)
-                                window.location='/blog/'+values.userName;
-                            }else{
-                                alert(data.msg);
-                            }
-                        }else{
-                            alert(data.msg);
-                        }
-                    });
+                    mode: 'cors',
+                    credentials:'include'
+                }).then((res) => {
+                    return res.json();
+                }).then((data) =>{
+                    if(data.status === "success"){
+                        location.href = "home.html"
+                    }else{
+                        message.error(data.msg);
+                    }
+                });
             }
         });
     }
@@ -68,10 +64,10 @@ class NormalLoginForm extends Component {
             <Form onSubmit={this.handleSubmit} className="login-form">
                 <h1>{this.state.isLogin?'登录':'注册'}</h1>
                 <FormItem>
-                    {getFieldDecorator('UserName', {
+                    {getFieldDecorator('username', {
                         rules: [{ required: true, message: 'Please input your UserName!' }],
                     })(
-                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+                        <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="username" />
                     )}
                 </FormItem>
                 <FormItem>

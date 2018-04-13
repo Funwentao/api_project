@@ -101,7 +101,7 @@ class StudentModal extends Component{
                     <Button type="primary" onClick={this.uploadHandler}>批量导入</Button>
                 </div>
                 {this.state.addShow&&<div className="add-content">
-                    <a href="javascript:;" onClick={this.addStudentHandler1}>&times;</a>
+                    <a href="javascript:;" onClick={this.addStudentHandler1}><Icon type="close"/></a>
                     <div className="label-content">
                         <label htmlFor="name">
                             姓名：<Input id="name" style={{width:'100px'}}/>
@@ -118,7 +118,7 @@ class StudentModal extends Component{
                     </div>
                 </div>}
                 {this.state.uploadShow&&<div className="upload-content">
-                    <a href="javascript:;" onClick={this.uploadHandler1}>&times;</a>
+                    <a href="javascript:;" onClick={this.uploadHandler1}><Icon type="close"/></a>
                     <Upload {...props}>
                         <Button>
                             <Icon type="upload" /> 导入
