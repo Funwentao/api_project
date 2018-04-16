@@ -24,9 +24,6 @@ class NormalLoginForm extends Component {
             if (!err) {
                 fetch(url,{
                     method:'post',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
                     body:JSON.stringify(values),
                     mode: 'cors',
                     credentials:'include'

@@ -23,24 +23,26 @@ class SemesterForm extends  Component{
     handleSubmit(e){
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            const {server} = CONFIG;
-            const url = server + (this.state.semesterId===0?'/semester':'/semester/'+this.state.semesterId);
-            fetch(url,{
-                method:this.state.semesterId===0?'post':'put',
-                mode: 'cors',
-                credentials:'include',
-                body:JSON.stringify(values)
-            }).then(res=>{
-                return res.json()
-            }).then(data=>{
-                if(data.status==='success'){
-                    message.success(data.msg);
-                    this.props.showModal();
-                    this.props.loadData();
-                }else{
-                    message.error(data.msg);
-                }
-            })
+            if(!err){
+                const {server} = CONFIG;
+                const url = server + (this.state.semesterId===0?'/semester':'/semester/'+this.state.semesterId);
+                fetch(url,{
+                    method:this.state.semesterId===0?'post':'put',
+                    mode: 'cors',
+                    credentials:'include',
+                    body:JSON.stringify(values)
+                }).then(res=>{
+                    return res.json()
+                }).then(data=>{
+                    if(data.status==='success'){
+                        message.success(data.msg);
+                        this.props.showModal();
+                        this.props.loadData();
+                    }else{
+                        message.error(data.msg);
+                    }
+                })
+            }
         })
 
     }

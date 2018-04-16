@@ -19,49 +19,53 @@ class CourseForm extends Component{
     handleSubmit(e){
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            const tempArray = [];
-            let obj = {
-                loc: values.address,
-                weekday: values.week_number,
-                start: values.start_class,
-                end: values.end_class
-            };
-            tempArray.push(obj);
-            const {length} = this.state.time;
-            for(let i = 1,j=2;i<length;i++){
+            if(!err){
+                const tempArray = [];
                 let obj = {
-                    loc: values["address"+j],
-                    weekday: values["week_number"+j],
-                    start: values["start_class"+j],
-                    end: values["end_class"+j]
+                    loc: values.address,
+                    weekday: values.week_number,
+                    start: values.start_class,
+                    end: values.end_class
                 };
                 tempArray.push(obj);
-            }
-            let jsonObj = {
-                courseName:values.courseName,
-                courseNum:values.courseNum,
-                semester: values.semester,
-                startWeek: values.startWeek,
-                endWeek:values.endWeek,
-                time:tempArray,
-                courseId:this.state.courseId
-            };
-            const {server} = CONFIG;
-            const url = server + '/course';
-            fetch(url,{
-                method:this.state.courseId===0?'put':'post',
-                body:JSON.stringify(jsonObj),
-                mode: 'cors',
-                credentials:'include'
-            }).then((res)=>{
-                return res.json()
-            }).then((data)=>{
-                if(data.status === 'success'){
-                    message.success(data.msg);
-                }else{
-                    message.error(data.msg);
+                const {length} = this.state.time;
+                for(let i = 1,j=2;i<length;i++){
+                    let obj = {
+                        loc: values["address"+j],
+                        weekday: values["week_number"+j],
+                        start: values["start_class"+j],
+                        end: values["end_class"+j]
+                    };
+                    tempArray.push(obj);
                 }
-            })
+                let jsonObj = {
+                    courseName:values.courseName,
+                    courseNum:values.courseNum,
+                    semester: values.semester,
+                    startWeek: values.startWeek,
+                    endWeek:values.endWeek,
+                    time:tempArray,
+                    courseId:this.state.courseId
+                };
+                const {server} = CONFIG;
+                const url = server + (this.state.courseId===0?'/course':'/course/'+this.state.courseId);
+                fetch(url,{
+                    method:this.state.courseId===0?'post':'put',
+                    body:JSON.stringify(jsonObj),
+                    mode: 'cors',
+                    credentials:'include'
+                }).then((res)=>{
+                    return res.json()
+                }).then((data)=>{
+                    if(data.status === 'success'){
+                        message.success(data.msg);
+                        this.props.showModal();
+                        this.props.loadData();
+                    }else{
+                        message.error(data.msg);
+                    }
+                })
+            }
         });
     }
     addTime(){

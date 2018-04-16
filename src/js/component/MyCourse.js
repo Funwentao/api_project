@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Input,Modal} from 'antd';
+import {Input,Modal,message} from 'antd';
 import Card from './Card';
 import AddCard from './AddCard';
 import CourseModal from './CourseModal';
@@ -50,10 +50,6 @@ class MyCourse extends Component{
             visible:false
         })
     }
-    deleteCard(){
-        const {server} = CONFIG;
-        const url = server + '/course';
-    }
     _loadData(){
         const {server} = CONFIG;
         const url = server + '/course';
@@ -69,6 +65,24 @@ class MyCourse extends Component{
                 historyCourseList:data.historyCourseList
             })
         });
+    }
+    deleteCard(id){
+        const {server} = CONFIG;
+        const url = server + '/course/' + id;
+        fetch(url,{
+            method:'delete',
+            mode:'cors',
+            credentials:'include'
+        }).then(res=>{
+            return res.json()
+        }).then(data=>{
+            if(data.status==='success'){
+                message.success(data.msg);
+            }else{
+                message.error(data.msg);
+            }
+            this._loadData();
+        })
     }
     componentDidMount(){
         this._loadData();
@@ -111,6 +125,7 @@ class MyCourse extends Component{
                                     showModal = {this.showModal}
                                     id = {e.courseId}
                                     key = {e.courseId}
+                                    deleteCard={this.deleteCard}
                                 />
                             })
                         }
@@ -153,7 +168,9 @@ class MyCourse extends Component{
                        visible={this.state.visible}
                        onOk={this.handleOk}
                        onCancel={this.handleCancel}>
-                    <CourseModal value={this.state.value}/>
+                    <CourseModal value={this.state.value}
+                                 showModal = {this.showModal}
+                                 loadData={this._loadData}/>
                 </Modal>
             </div>
         )
