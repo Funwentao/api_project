@@ -5,6 +5,8 @@ import fetch from 'isomorphic-fetch';
 import {CONFIG} from "../constants/conifg";
 const FormItem = Form.Item;
 const Option = Select.Option;
+const {server} = CONFIG;
+
 
 const {RangePicker}  = DatePicker;
 class SemesterForm extends  Component{
@@ -24,7 +26,6 @@ class SemesterForm extends  Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if(!err){
-                const {server} = CONFIG;
                 const url = server + (this.state.semesterId===0?'/semester':'/semester/'+this.state.semesterId);
                 fetch(url,{
                     method:this.state.semesterId===0?'post':'put',

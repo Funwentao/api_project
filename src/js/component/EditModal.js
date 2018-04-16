@@ -2,6 +2,8 @@ import React,{Component} from 'react';
 import {Form,Button,Input,Icon,message} from 'antd'
 import fetch from 'isomorphic-fetch';
 import {CONFIG} from "../constants/conifg";
+const {server} = CONFIG;
+
 
 const FormItem = Form.Item;
 
@@ -14,7 +16,6 @@ class EditForm extends Component{
         e.preventDefault();
         this.props.form.validateFields((err,values)=>{
             if(!err){
-                const {server} = CONFIG;
                 const url = server + '/user/password';
                 fetch(url,{
                     method:'put',

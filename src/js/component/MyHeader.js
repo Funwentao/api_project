@@ -3,6 +3,8 @@ import {Icon,Dropdown,Menu,message} from  'antd';
 import fetch from 'isomorphic-fetch';
 import {CONFIG} from "../constants/conifg";
 import '../../style/myheader.scss';
+const {server} = CONFIG;
+
 
 
 export default function MyHeader(props){
@@ -10,7 +12,6 @@ export default function MyHeader(props){
         if(e.key==='1'){
             props.showModal();
         }else{
-            const {server} = CONFIG;
             const url = server + '/logout';
             fetch(url,{
                 method:'get',

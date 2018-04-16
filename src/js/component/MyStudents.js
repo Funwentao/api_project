@@ -1,21 +1,29 @@
 import React,{Component} from 'react';
-import {Modal} from 'antd';
+import {Modal,message} from 'antd';
 import Card from './Card';
 import StudentModal from './StudentModal';
 import fetch from 'isomorphic-fetch';
 import {CONFIG} from "../constants/conifg"
+
+const {server} = CONFIG;
 
 class MyStudents extends Component{
     constructor(){
         super();
         this.state = {
             currentCourseList:[],
-            historyCourseList:[]
+            historyCourseList:[],
+            studentList:[],
+            courseId:0
         };
         this.showModal = this.showModal.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleOk = this.handleOk.bind(this);
-        this._loadData = this._loadData.bind(this)
+        this._loadData = this._loadData.bind(this);
+        this._loadStudent = this._loadStudent.bind(this);
+        this.deleteStudent = this.deleteStudent.bind(this);
+        this.addStudent = this.addStudent.bind(this);
+        this.uploadFile = this.uploadFile.bind(this);
     }
     _loadData(){
         const {server} = CONFIG;
@@ -36,9 +44,63 @@ class MyStudents extends Component{
     componentDidMount(){
         this._loadData();
     }
-    showModal(){
+    _loadStudent(id){
+        const url = server + `/course/${id}/student`;
+        fetch(url,{
+            method:'get',
+            mode: 'cors',
+            credentials:'include'
+        }).then((res) => {
+            return res.json();
+        }).then((data) =>{
+            this.setState({
+                studentList:data.studentList,
+                courseId:id
+            })
+        });
+    }
+    deleteStudent(studentId){
+        const url = server + `/courser/${this.state.courseId}/student/${studentId}`;
+        fetch(url,{
+            method:'delete',
+            mode:'cors',
+            credentials:'include'
+        }).then((res) => {
+            return res.json();
+        }).then((data) =>{
+            if(data.status==='success'){
+                message.success(data.msg);
+                this._loadStudent();
+            }else{
+                message.error(data.msg);
+            }
+        });
+    }
+    addStudent(student){
+        const url = server + `/courser/${this.state.courseId}/student`;
+        fetch(url,{
+            method:'post',
+            mode:'cors',
+            credentials:'include',
+            body:JSON.stringify(student)
+        }).then((res) => {
+            return res.json();
+        }).then((data) =>{
+            if(data.status==='success'){
+                message.success(data.msg);
+                this._loadStudent();
+            }else{
+                message.error(data.msg);
+            }
+        });
+    }
+    uploadFile(){
+
+    }
+    showModal(id){
+        this._loadStudent(id);
         this.setState({
-            visible:true
+            visible:true,
         })
     }
     handleCancel(){
@@ -69,6 +131,7 @@ class MyStudents extends Component{
                                     className = {className}
                                     showModal = {this.showModal}
                                     key={e.courseId}
+                                    id={e.courseId}
                                 />
                             })
                         }
@@ -98,7 +161,10 @@ class MyStudents extends Component{
                        visible={this.state.visible}
                        onOk={this.handleOk}
                        onCancel={this.handleCancel}>
-                    <StudentModal/>
+                    <StudentModal studentList={this.state.studentList}
+                                  deleteStudent={this.deleteStudent}
+                                  addStudent ={this.addStudent}
+                                  courseId={this.state.courseId}/>
                 </Modal>
             </div>
         )

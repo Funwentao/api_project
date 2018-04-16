@@ -2,7 +2,9 @@ import React,{Component} from 'react';
 import { Form, Icon, Input, Button,message} from 'antd';
 import fetch from 'isomorphic-fetch';
 import "../../style/login.scss";
-import {CONFIG} from "../constants/conifg";
+import {CONFIG} from "../constants/conifg"
+const {server} = CONFIG;
+
 
 const FormItem = Form.Item;
 
@@ -19,7 +21,6 @@ class NormalLoginForm extends Component {
     handleSubmit  (e) {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            const {server} = CONFIG;
             const url = server + "/login";
             if (!err) {
                 fetch(url,{

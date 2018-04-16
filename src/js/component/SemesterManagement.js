@@ -5,6 +5,8 @@ import Card from './Card';
 import AddCard from './AddCard';
 import fetch from 'isomorphic-fetch';
 import {CONFIG} from "../constants/conifg";
+const {server} = CONFIG;
+
 
 class SemesterManagement extends Component{
     constructor(){
@@ -42,7 +44,6 @@ class SemesterManagement extends Component{
         })
     }
     _loadData(){
-        const {server} = CONFIG;
         const url = server + '/semester';
         fetch(url,{
             method:'get',
@@ -58,7 +59,6 @@ class SemesterManagement extends Component{
 
     }
     deleteCard(id){
-        const {server} = CONFIG;
         const url = server + '/semester/' + id;
         fetch(url,{
             method:'delete',

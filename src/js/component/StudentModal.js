@@ -15,7 +15,17 @@ class StudentModal extends Component{
         this.uploadHandler = this.uploadHandler.bind(this);
         this.addStudentHandler1 = this.addStudentHandler1.bind(this);
         this.uploadHandler1 = this.uploadHandler1.bind(this);
+        this.addStudent = this.addStudent.bind(this);
     }
+    addStudent(){
+        const student = {
+            name:this.name.value,
+            classInfo:this.classInfo.value,
+            num:this.num.value
+        };
+        this.props.addStudent(student);
+    }
+
     addStudentHandler(){
         this.setState({
             addShow:true,
@@ -44,39 +54,29 @@ class StudentModal extends Component{
             dataIndex: 'name'
         }, {
             title: '学号',
-            dataIndex: 'number'
+            dataIndex: 'studentNum'
         }, {
             title: '班级',
-            dataIndex: 'class'
+            dataIndex: 'classInfo'
         },{
             title:'删除',
             dataIndex:'delete'
         }];
-        const data = [{
-            key: '1',
-            name: 'John Brown',
-            number: 32,
-            class: '计科1班',
-            delete:<Button type='danger'>删除</Button>
-        }, {
-            key: '2',
-            name: 'Jim Green',
-            number: 42,
-            class: '计科1班',
-            delete:<Button type='danger'>删除</Button>
-        }, {
-            key: '3',
-            name: 'Joe Black',
-            number: 32,
-            class: '计科1班',
-            delete:<Button type='danger'>删除</Button>
-        }, {
-            key: '4',
-            name: 'Disabled User',
-            number: 99,
-            class: '计科1班',
-            delete:<Button type='danger'>删除</Button>
-        }];
+        const data = this.props.studentList.map((e)=>{
+           return {
+               key:e.id,
+               ...e,
+               delete:<Button type='danger'
+                              onClick={()=>this.props.deleteStudent(e.id)}>删除</Button>
+           };
+        });
+        // const data = [{
+        //     key: '1',
+        //     name: 'John Brown',
+        //     number: 32,
+        //     class: '计科1班',
+        //     delete:<Button type='danger'>删除</Button>
+        // }];
         const props = {
             name: 'file',
             action: '//jsonplaceholder.typicode.com/posts/',
@@ -101,20 +101,27 @@ class StudentModal extends Component{
                     <Button type="primary" onClick={this.uploadHandler}>批量导入</Button>
                 </div>
                 {this.state.addShow&&<div className="add-content">
-                    <a href="javascript:;" onClick={this.addStudentHandler1}><Icon type="close"/></a>
+                    <a href="javascript:;" onClick={this.addStudent}><Icon type="close"/></a>
                     <div className="label-content">
                         <label htmlFor="name">
-                            姓名：<Input id="name" style={{width:'100px'}}/>
+                            姓名：<Input id="name"
+                                      style={{width:'100px'}}
+                                      ref={(name)=>this.name = name}/>
                         </label>
                         <label htmlFor="number">
-                            学号：<Input id="number" style={{width:'100px'}}/>
+                            学号：<Input id="number"
+                                      style={{width:'100px'}}
+                                      ref={(num)=>this.num = num}/>
                         </label>
                         <label htmlFor="class">
-                            班级：<Input id="class" style={{width:'100px'}}/>
+                            班级：<Input id="class"
+                                      style={{width:'100px'}}
+                                      ref={(classInfo)=>this.classInfo = classInfo}/>
                         </label>
                     </div>
                     <div className="btn-content">
-                        <Button type='primary'>增加</Button>
+                        <Button type='primary'
+                                addStudent={this.addStudentHandler}>增加</Button>
                     </div>
                 </div>}
                 {this.state.uploadShow&&<div className="upload-content">

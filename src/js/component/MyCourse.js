@@ -5,6 +5,8 @@ import AddCard from './AddCard';
 import CourseModal from './CourseModal';
 import fetch from 'isomorphic-fetch';
 import {CONFIG} from "../constants/conifg";
+const {server} = CONFIG;
+
 
 const Search = Input.Search;
 
@@ -51,7 +53,6 @@ class MyCourse extends Component{
         })
     }
     _loadData(){
-        const {server} = CONFIG;
         const url = server + '/course';
         fetch(url,{
             method:'get',
@@ -67,7 +68,6 @@ class MyCourse extends Component{
         });
     }
     deleteCard(id){
-        const {server} = CONFIG;
         const url = server + '/course/' + id;
         fetch(url,{
             method:'delete',

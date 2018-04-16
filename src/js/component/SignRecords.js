@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import Card from './Card';
-import {CONFIG} from "../constants/conifg"
+import {CONFIG} from "../constants/conifg";
+const {server} = CONFIG;
+
 
 
 class SignRecords extends Component{
@@ -12,7 +14,6 @@ class SignRecords extends Component{
         };
     }
     _loadData(){
-        const {server} = CONFIG;
         const url = server + '/course';
         fetch(url,{
             method:'get',

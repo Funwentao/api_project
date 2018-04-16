@@ -3,7 +3,9 @@ import {Form,Input,Select,Button,Col,Icon,message} from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 import fetch from 'isomorphic-fetch';
-import {CONFIG} from "../constants/conifg"
+import {CONFIG} from "../constants/conifg";
+const {server} = CONFIG;
+
 
 class CourseForm extends Component{
     constructor(props){
@@ -47,7 +49,6 @@ class CourseForm extends Component{
                     time:tempArray,
                     courseId:this.state.courseId
                 };
-                const {server} = CONFIG;
                 const url = server + (this.state.courseId===0?'/course':'/course/'+this.state.courseId);
                 fetch(url,{
                     method:this.state.courseId===0?'post':'put',
