@@ -1,9 +1,8 @@
 import React,{Component} from 'react';
 import Card from './Card';
 import {CONFIG} from "../constants/conifg";
+
 const {server} = CONFIG;
-
-
 
 class SignRecords extends Component{
     constructor() {

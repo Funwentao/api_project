@@ -23,7 +23,6 @@ class MyStudents extends Component{
         this._loadStudent = this._loadStudent.bind(this);
         this.deleteStudent = this.deleteStudent.bind(this);
         this.addStudent = this.addStudent.bind(this);
-        this.uploadFile = this.uploadFile.bind(this);
     }
     _loadData(){
         const {server} = CONFIG;
@@ -44,8 +43,8 @@ class MyStudents extends Component{
     componentDidMount(){
         this._loadData();
     }
-    _loadStudent(id){
-        const url = server + `/course/${id}/student`;
+    _loadStudent(id,num){
+        const url = server + `/course/${id}/student`+ (num?`?num=${num}`:'');
         fetch(url,{
             method:'get',
             mode: 'cors',
@@ -60,7 +59,7 @@ class MyStudents extends Component{
         });
     }
     deleteStudent(studentId){
-        const url = server + `/courser/${this.state.courseId}/student/${studentId}`;
+        const url = server + `/course/${this.state.courseId}/student/${studentId}`;
         fetch(url,{
             method:'delete',
             mode:'cors',
@@ -70,14 +69,19 @@ class MyStudents extends Component{
         }).then((data) =>{
             if(data.status==='success'){
                 message.success(data.msg);
-                this._loadStudent();
+                this._loadStudent(this.state.courseId);
             }else{
                 message.error(data.msg);
             }
         });
     }
     addStudent(student){
-        const url = server + `/courser/${this.state.courseId}/student`;
+        const url = server + `/course/${this.state.courseId}/student`;
+        console.log(student);
+        if(Object.values(student).some((e)=>e==="")){
+            message.error("信息未填写完整!");
+            return;
+        }
         fetch(url,{
             method:'post',
             mode:'cors',
@@ -88,14 +92,11 @@ class MyStudents extends Component{
         }).then((data) =>{
             if(data.status==='success'){
                 message.success(data.msg);
-                this._loadStudent();
+                this._loadStudent(this.state.courseId);
             }else{
                 message.error(data.msg);
             }
         });
-    }
-    uploadFile(){
-
     }
     showModal(id){
         this._loadStudent(id);
@@ -164,6 +165,7 @@ class MyStudents extends Component{
                     <StudentModal studentList={this.state.studentList}
                                   deleteStudent={this.deleteStudent}
                                   addStudent ={this.addStudent}
+                                  _loadStudent = {this._loadStudent}
                                   courseId={this.state.courseId}/>
                 </Modal>
             </div>

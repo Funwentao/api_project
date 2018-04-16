@@ -186,7 +186,7 @@ class CourseForm extends Component{
                 </Col>
                 <Col span={2}>
                     <a style={{ display: 'inline-block', width: '100%', textAlign: 'center',color:'#000' }} onClick={()=>this.removeTime(i)}>
-                        <Icon type="close"/>
+                        <Icon type="minus-circle-o"/>
                     </a>
                 </Col>
             </FormItem>;
@@ -354,7 +354,7 @@ class CourseForm extends Component{
                     </Col>
                     <Col span={2}>
                         <a style={{ display: 'inline-block', width: '100%', textAlign: 'center',color:'#000' }} onClick={this.addTime}>
-                            <Icon type="plus"/>
+                            <Icon type="plus-circle-o" />
                         </a>
                     </Col>
                 </FormItem>

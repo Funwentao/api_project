@@ -1,6 +1,10 @@
 import React,{Component} from 'react';
 import {Button,Table,Input,Upload,Icon,message} from 'antd';
 import '../../style/studentModal.scss';
+import {CONFIG} from "../constants/conifg";
+
+const {server} = CONFIG;
+
 
 const Search = Input.Search;
 
@@ -9,19 +13,30 @@ class StudentModal extends Component{
         super();
         this.state = {
             addShow:false,
-            uploadShow:false
+            uploadShow:false,
+            name:'',
+            classInfo:'',
+            num:''
         };
         this.addStudentHandler = this.addStudentHandler.bind(this);
         this.uploadHandler = this.uploadHandler.bind(this);
         this.addStudentHandler1 = this.addStudentHandler1.bind(this);
         this.uploadHandler1 = this.uploadHandler1.bind(this);
         this.addStudent = this.addStudent.bind(this);
+        this.valueChange = this.valueChange.bind(this);
+    }
+    valueChange(e){
+        const newState = {};
+        newState[e.target.id] = e.target.value;
+        console.log(newState);
+        this.setState(newState);
     }
     addStudent(){
+        const {name,classInfo,num} = this.state;
         const student = {
-            name:this.name.value,
-            classInfo:this.classInfo.value,
-            num:this.num.value
+            name,
+            classInfo,
+            num
         };
         this.props.addStudent(student);
     }
@@ -48,6 +63,7 @@ class StudentModal extends Component{
             uploadShow:false
         })
     }
+
     render(){
         const columns = [{
             title: '姓名',
@@ -70,27 +86,23 @@ class StudentModal extends Component{
                               onClick={()=>this.props.deleteStudent(e.id)}>删除</Button>
            };
         });
-        // const data = [{
-        //     key: '1',
-        //     name: 'John Brown',
-        //     number: 32,
-        //     class: '计科1班',
-        //     delete:<Button type='danger'>删除</Button>
-        // }];
+        const {_loadStudent,courseId} = this.props;
         const props = {
             name: 'file',
-            action: '//jsonplaceholder.typicode.com/posts/',
+            action: server + `/course/${this.props.courseId}/student`,
             headers: {
                 authorization: 'authorization-text',
             },
+            withCredentials:true,
             onChange(info) {
                 if (info.file.status !== 'uploading') {
                     console.log(info.file, info.fileList);
                 }
-                if (info.file.status === 'done') {
-                    message.success(`${info.file.name} file uploaded successfully`);
+                if (info.file.status === 'done'&& info.file.response.status==='success') {
+                    message.success(`${info.file.response.msg}`);
+                    _loadStudent(courseId);
                 } else if (info.file.status === 'error') {
-                    message.error(`${info.file.name} file upload failed.`);
+                    message.error(`${info.file.response.msg}`);
                 }
             },
         };
@@ -101,27 +113,27 @@ class StudentModal extends Component{
                     <Button type="primary" onClick={this.uploadHandler}>批量导入</Button>
                 </div>
                 {this.state.addShow&&<div className="add-content">
-                    <a href="javascript:;" onClick={this.addStudent}><Icon type="close"/></a>
+                    <a href="javascript:;" onClick={this.addStudentHandler1}><Icon type="close"/></a>
                     <div className="label-content">
                         <label htmlFor="name">
                             姓名：<Input id="name"
                                       style={{width:'100px'}}
-                                      ref={(name)=>this.name = name}/>
+                                      onChange={this.valueChange}/>
                         </label>
-                        <label htmlFor="number">
-                            学号：<Input id="number"
+                        <label htmlFor="num">
+                            学号：<Input id="num"
                                       style={{width:'100px'}}
-                                      ref={(num)=>this.num = num}/>
+                                      onChange={this.valueChange}/>
                         </label>
-                        <label htmlFor="class">
-                            班级：<Input id="class"
+                        <label htmlFor="classInfo">
+                            班级：<Input id="classInfo"
                                       style={{width:'100px'}}
-                                      ref={(classInfo)=>this.classInfo = classInfo}/>
+                                      onChange={this.valueChange}/>
                         </label>
                     </div>
                     <div className="btn-content">
                         <Button type='primary'
-                                addStudent={this.addStudentHandler}>增加</Button>
+                                onClick={this.addStudent}>增加</Button>
                     </div>
                 </div>}
                 {this.state.uploadShow&&<div className="upload-content">
@@ -135,7 +147,7 @@ class StudentModal extends Component{
                 <div style={{marginBottom:20}}>
                     <Search
                         placeholder="input search text"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => {_loadStudent(courseId,value)}}
                         style={{ width: 300 }}
                         enterButton
                     />
