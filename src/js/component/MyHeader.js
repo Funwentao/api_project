@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
-import {Icon,Dropdown,Menu} from  'antd';
+import {Icon,Dropdown,Menu,message} from  'antd';
+import fetch from 'isomorphic-fetch';
+import {CONFIG} from "../constants/conifg";
 import '../../style/myheader.scss';
 
 
@@ -8,7 +10,21 @@ export default function MyHeader(props){
         if(e.key==='1'){
             props.showModal();
         }else{
-            location.href = 'login.html'
+            const {server} = CONFIG;
+            const url = server + '/logout';
+            fetch(url,{
+                method:'get',
+                mode: 'cors',
+                credentials:'include'
+            }).then(res=>{
+                return res.json();
+            }).then(data=>{
+               if(data.status==='success'){
+                   location.href = 'login.html'
+               } else{
+                   message.error(data.msg);
+               }
+            });
         }
     }
     const menu = (

@@ -1,16 +1,43 @@
 import React,{Component} from 'react';
-import {Form,Button,Input,Icon} from 'antd'
+import {Form,Button,Input,Icon,message} from 'antd'
+import fetch from 'isomorphic-fetch';
+import {CONFIG} from "../constants/conifg";
 
 const FormItem = Form.Item;
 
 class EditForm extends Component{
     constructor(){
-        super()
+        super();
+        this.handleSubmit = this.handleSubmit.bind(this);
+    };
+    handleSubmit(e){
+        e.preventDefault();
+        this.props.form.validateFields((err,values)=>{
+            if(!err){
+                const {server} = CONFIG;
+                const url = server + '/user/password';
+                fetch(url,{
+                    method:'put',
+                    mode:'cors',
+                    credentials:'include',
+                    body:JSON.stringify(values)
+                }).the(res=>{
+                    return res.json();
+                }).then(data=>{
+                    if(data.status==='success'){
+                        message.success(data.msg);
+                        this.props.showModal();
+                    }else{
+                        message.error(data.msg);
+                    }
+                });
+            }
+        })
     }
     render(){
         const { getFieldDecorator } = this.props.form;
         return(
-            <Form>
+            <Form onSubmit={this.handleSubmit}>
                 <FormItem>
                     {getFieldDecorator('oldPassword', {
                         rules: [{ required: true, message: 'Please input your UserName!' }],

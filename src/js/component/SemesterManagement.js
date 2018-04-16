@@ -49,7 +49,7 @@ class SemesterManagement extends Component{
             mode: 'cors',
             credentials:'include'
         }).then(res=>{
-            return res.json()
+            return res.json();
         }).then(data=>{
             this.setState({
                 semesterList:data.semesterList

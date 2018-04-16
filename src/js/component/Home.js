@@ -97,7 +97,7 @@ class Home extends Component{
                        visible={this.state.visible}
                        onOk={this.handleOk}
                        onCancel={this.handleCancel}>
-                    <EditModal/>
+                    <EditModal showModal={this.showModal}/>
                 </Modal>
             </Layout>
         )
