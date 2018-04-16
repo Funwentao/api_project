@@ -1,16 +1,21 @@
 import React,{Component} from 'react';
-import {Form,Input,Select,Button,Col,DatePicker } from 'antd';
+import {Form,Input,Select,Button,Col,DatePicker,message} from 'antd';
+import moment from 'moment';
+import fetch from 'isomorphic-fetch';
+import {CONFIG} from "../constants/conifg";
 const FormItem = Form.Item;
 const Option = Select.Option;
 
 const {RangePicker }  = DatePicker;
 class SemesterForm extends  Component{
-    constructor(){
-        super();
-        const year = new Date().getFullYear();
+    constructor(props){
+        super(props);
+        const {value} = props;
+        const year = value.startYear||new Date().getFullYear();
         this.state = {
             startYear:year,
-            endYear:year + 1
+            endYear:year + 1,
+            semesterId:value.semesterId||0
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.startYearChange = this.startYearChange.bind(this);
@@ -18,7 +23,24 @@ class SemesterForm extends  Component{
     handleSubmit(e){
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            console.log(JSON.stringify(values));
+            const {server} = CONFIG;
+            const url = server + (this.state.semesterId===0?'/semester':'/semester/'+this.state.semesterId);
+            fetch(url,{
+                method:this.state.semesterId===0?'post':'put',
+                mode: 'cors',
+                credentials:'include',
+                body:JSON.stringify(values)
+            }).then(res=>{
+                return res.json()
+            }).then(data=>{
+                if(data.status===1){
+                    message.success(data.msg);
+                    this.props.showModal();
+                    this.props.loadData();
+                }else{
+                    message.error(data.msg);
+                }
+            })
         });
     }
     startYearChange(e){
@@ -27,6 +49,16 @@ class SemesterForm extends  Component{
             startYear:year,
             endYear:year + 1
         })
+    }
+    componentWillReceiveProps(nextProps){
+        if(this.props.value.semesterId!==nextProps.value.semesterId){
+            const startYear = nextProps.value.startYear||new Date().getFullYear();
+            this.setState({
+                startYear:startYear,
+                endYear:startYear+1,
+                semesterId:nextProps.value.semesterId||0
+            });
+        }
     }
     render(){
         const { getFieldDecorator } = this.props.form;
@@ -41,6 +73,8 @@ class SemesterForm extends  Component{
             },
         };
         const {startYear,endYear} = this.state;
+        const {value} = this.props;
+        console.log(this.props);
         return(
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
@@ -82,13 +116,14 @@ class SemesterForm extends  Component{
                     {...formItemLayout}
                 >
                     {getFieldDecorator('semester', {
+                        initialValue:value.num,
                         rules: [{
                             required: true, message: 'Please input the semester!',
                         }],
                     })(
                         <Select>
-                            <Option value={0}>上学期</Option>
-                            <Option value={1}>下学期</Option>
+                            <Option value={1}>第一学期</Option>
+                            <Option value={2}>第二学期</Option>
                         </Select>
                     )}
                 </FormItem>
@@ -97,6 +132,7 @@ class SemesterForm extends  Component{
                     {...formItemLayout}
                 >
                     {getFieldDecorator('date', {
+                        initialValue:[moment(value.startTime), moment(value.endTime)],
                         rules: [{
                             required: true, message: 'Please input the date!',
                         }],

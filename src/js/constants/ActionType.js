@@ -1,0 +1,9 @@
+export const GET_ALL_SEMESTER = 'GET_ALL_SEMESTER';
+export const ADD_SEMESTER = 'ADD_SEMESTER';
+export const DEL_SEMESTER_BY_ID = 'DEL_SEMESTER_BY_ID';
+export const EDIT_SEMESTER_BY_ID = 'EDIT_SEMESTER_BY_ID';
+
+export const GET_ALL_COURSE = 'GET_ALL_COURSE';
+export const ADD_COURSE = 'ADD_COURSE';
+export const DEL_COURSE_BY_ID = 'DEL_COURSE_BY_ID';
+export const EDIT_COURSE_BY_ID = 'EDIT_COURSE_BY_ID';

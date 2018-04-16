@@ -21,14 +21,14 @@ class MyCourse extends Component{
         this.handleCancel = this.handleCancel.bind(this);
         this.handleOk = this.handleOk.bind(this);
         this._loadData = this._loadData.bind(this);
+        this.deleteCard = this.deleteCard.bind(this);
     }
     showModal(id){
-        console.log(id);
         let value = {};
         this.state.currentCourseList.forEach((e)=>{
-           if(e.courseId===id){
-               value = e;
-           }
+            if(e.courseId===id){
+                value = e;
+            }
         });
         this.state.historyCourseList.forEach((e)=>{
             if(e.courseId===id){
@@ -37,7 +37,7 @@ class MyCourse extends Component{
         });
         this.setState({
             visible:true,
-            value
+            value,
         });
     }
     handleCancel(){
@@ -49,6 +49,10 @@ class MyCourse extends Component{
         this.setState({
             visible:false
         })
+    }
+    deleteCard(){
+        const {server} = CONFIG;
+        const url = server + '/course';
     }
     _loadData(){
         const {server} = CONFIG;

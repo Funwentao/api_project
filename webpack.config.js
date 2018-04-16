@@ -53,7 +53,7 @@ module.exports = {
             title: '二维码',
             filename: '../view/qr.html',
             template: './template.html',
-            chunks:['qr']
+            chunks:['qr','vendor']
         }),
         new HtmlWebpackPlugin({
             title: '登录注册',

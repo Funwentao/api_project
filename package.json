@@ -48,9 +48,14 @@
     "koa-static": "^4.0.2",
     "koa-views": "^6.1.4",
     "koa2-cors": "^2.0.5",
+    "moment": "^2.22.1",
     "mongoose": "^5.0.9",
+    "mysql": "^2.15.0",
     "qrcode.react": "^0.8.0",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   }
 }

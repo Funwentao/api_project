@@ -2,22 +2,39 @@ import React,{Component} from 'react';
 import {Modal} from 'antd';
 import Card from './Card';
 import StudentModal from './StudentModal';
+import fetch from 'isomorphic-fetch';
+import {CONFIG} from "../constants/conifg"
 
 class MyStudents extends Component{
     constructor(){
         super();
         this.state = {
-            course:[{
-                name:'离散数学',
-                tips1:'课程号',
-                value1:'123456',
-                tips2:'学生人数',
-                value2:'20人'
-            }]
+            currentCourseList:[],
+            historyCourseList:[]
         };
         this.showModal = this.showModal.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleOk = this.handleOk.bind(this);
+        this._loadData = this._loadData.bind(this)
+    }
+    _loadData(){
+        const {server} = CONFIG;
+        const url = server + '/course';
+        fetch(url,{
+            method:'get',
+            mode: 'cors',
+            credentials:'include'
+        }).then((res) => {
+            return res.json();
+        }).then((data) =>{
+            this.setState({
+                currentCourseList:data.currentCourseList,
+                historyCourseList:data.historyCourseList
+            })
+        });
+    }
+    componentDidMount(){
+        this._loadData();
     }
     showModal(){
         this.setState({
@@ -41,16 +58,17 @@ class MyStudents extends Component{
                     <p>进行中的课程：</p>
                     <div style={{overflow:'hidden'}}>
                         {
-                            this.state.course.map((e)=> {
+                            this.state.currentCourseList.map((e)=> {
                                 const className = 'color' + Math.ceil(Math.random()*10);
                                 return <Card
-                                    name={e.name}
-                                    tips1={e.tips1}
-                                    value1={e.value1}
-                                    tips2={e.tips2}
-                                    value2={e.value2}
+                                    name={e.courseName}
+                                    tips1="课程号"
+                                    value1={e.courseNum}
+                                    tips2="学生人数"
+                                    value2={e.studentNum}
                                     className = {className}
                                     showModal = {this.showModal}
+                                    key={e.courseId}
                                 />
                             })
                         }
@@ -60,16 +78,17 @@ class MyStudents extends Component{
                     <p>已结束的课程：</p>
                     <div style={{overflow:'hidden'}}>
                         {
-                            this.state.course.map((e)=> {
+                            this.state.historyCourseList.map((e)=> {
                                 const className = 'color' + Math.ceil(Math.random()*10);
                                 return <Card
-                                    name={e.name}
-                                    tips1={e.tips1}
-                                    value1={e.value1}
-                                    tips2={e.tips2}
-                                    value2={e.value2}
+                                    name={e.courseName}
+                                    tips1="课程号"
+                                    value1={e.courseNum}
+                                    tips2="学生人数"
+                                    value2={e.studentNum}
                                     className = {className}
                                     showModal = {this.showModal}
+                                    key={e.courseId}
                                 />
                             })
                         }

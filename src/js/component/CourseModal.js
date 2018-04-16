@@ -49,7 +49,7 @@ class CourseForm extends Component{
             const {server} = CONFIG;
             const url = server + '/course';
             fetch(url,{
-                method:'post',
+                method:this.state.courseId===0?'put':'post',
                 body:JSON.stringify(jsonObj),
                 mode: 'cors',
                 credentials:'include'
@@ -116,75 +116,75 @@ class CourseForm extends Component{
             let k1 = "key"+i;
             let k2 = "key2"+i;
             let timeItem = <FormItem key={k1}
-                    label={a}
-                    {...formItemLayout}
-                >
-                    <Col span={3}>
+                                     label={a}
+                                     {...formItemLayout}
+            >
+                <Col span={3}>
                         <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
                             星期
                         </span>
-                    </Col>
-                    <Col span={5}>
-                        <FormItem >
-                            {getFieldDecorator(b, {
-                                initialValue:time[i]?time[i].weekday:1,
-                                rules: [ {
-                                    required: true, message: 'Please select the week_number!',
-                                }],
-                            })(
-                                <Select>{weekGroup}</Select>
-                            )}
-                        </FormItem>
-                    </Col>
-                    <Col span={1}>
+                </Col>
+                <Col span={5}>
+                    <FormItem >
+                        {getFieldDecorator(b, {
+                            initialValue:time[i]?time[i].weekday:1,
+                            rules: [ {
+                                required: true, message: 'Please select the week_number!',
+                            }],
+                        })(
+                            <Select>{weekGroup}</Select>
+                        )}
+                    </FormItem>
+                </Col>
+                <Col span={1}>
                         <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
                             &nbsp;
                         </span>
-                    </Col>
-                    <Col span={5}>
+                </Col>
+                <Col span={5}>
+                    <FormItem >
                         <FormItem >
-                            <FormItem >
-                                {getFieldDecorator(c, {
-                                    initialValue:time[i]?time[i].start:1,
-                                    rules: [ {
-                                        required: true, message: 'Please select the start_class!',
-                                    }],
-                                })(
-                                    <Select>{optionGroup}</Select>
-                                )}
-                            </FormItem>
+                            {getFieldDecorator(c, {
+                                initialValue:time[i]?time[i].start:1,
+                                rules: [ {
+                                    required: true, message: 'Please select the start_class!',
+                                }],
+                            })(
+                                <Select>{optionGroup}</Select>
+                            )}
                         </FormItem>
-                    </Col>
-                    <Col span={1}>
+                    </FormItem>
+                </Col>
+                <Col span={1}>
                         <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
                             -
                         </span>
-                    </Col>
-                    <Col span={5}>
+                </Col>
+                <Col span={5}>
+                    <FormItem >
                         <FormItem >
-                            <FormItem >
-                                {getFieldDecorator(d, {
-                                    initialValue:time[i]?time[i].end:2,
-                                    rules: [ {
-                                        required: true, message: 'Please select the end_class!',
-                                    }],
-                                })(
-                                    <Select>{optionGroup}</Select>
-                                )}
-                            </FormItem>
+                            {getFieldDecorator(d, {
+                                initialValue:time[i]?time[i].end:2,
+                                rules: [ {
+                                    required: true, message: 'Please select the end_class!',
+                                }],
+                            })(
+                                <Select>{optionGroup}</Select>
+                            )}
                         </FormItem>
-                    </Col>
-                    <Col span={2}>
+                    </FormItem>
+                </Col>
+                <Col span={2}>
                         <span style={{ display: 'inline-block', width: '100%', textAlign: 'center' }}>
                             节
                         </span>
-                    </Col>
-                    <Col span={2}>
-                        <a style={{ display: 'inline-block', width: '100%', textAlign: 'center',color:'#000' }} onClick={()=>this.removeTime(i)}>
-                            <Icon type="close"/>
-                        </a>
-                    </Col>
-                </FormItem>;
+                </Col>
+                <Col span={2}>
+                    <a style={{ display: 'inline-block', width: '100%', textAlign: 'center',color:'#000' }} onClick={()=>this.removeTime(i)}>
+                        <Icon type="close"/>
+                    </a>
+                </Col>
+            </FormItem>;
             let addressItem = <FormItem
                 key={k2}
                 label={e}
