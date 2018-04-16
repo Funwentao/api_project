@@ -57,9 +57,9 @@ class SemesterManagement extends Component{
         });
 
     }
-    deleteCard(){
+    deleteCard(id){
         const {server} = CONFIG;
-        const url = server + '/semester/' + this.state.value.semesterId;
+        const url = server + '/semester/' + id;
         fetch(url,{
             method:'delete',
             mode:'cors',
@@ -67,7 +67,7 @@ class SemesterManagement extends Component{
         }).then(res=>{
             return res.json()
         }).then(data=>{
-            if(data.status===1){
+            if(data.status==='success'){
                 message.success(data.msg);
             }else{
                 message.error(data.msg);
@@ -99,6 +99,7 @@ class SemesterManagement extends Component{
                                     showModal = {this.showModal}
                                     key = {e.semesterId}
                                     id = {e.semesterId}
+                                    deleteCard={this.deleteCard}
                                 />
                             })
                         }

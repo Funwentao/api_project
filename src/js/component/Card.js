@@ -10,7 +10,8 @@ class Card extends Component{
         const {id} = this.props;
         return(
             <div className="card" onClick={()=>this.props.showModal(id)}>
-                {this.props.visible&&<a href="javascript:;" className="remove-btn" onClick={(e)=>e.stopPropagation()}><Icon type="close"/></a>}
+                {this.props.visible&&<a href="javascript:;" className="remove-btn"
+                                        onClick={(e)=>{e.stopPropagation();this.props.deleteCard(id)}}><Icon type="close"/></a>}
                 <p className={"course-name "+this.props.className}>{this.props.name}</p>
                 <div className="tips-content">
                     <div className="tips-item">

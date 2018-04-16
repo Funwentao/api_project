@@ -6,7 +6,7 @@ import {CONFIG} from "../constants/conifg";
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-const {RangePicker }  = DatePicker;
+const {RangePicker}  = DatePicker;
 class SemesterForm extends  Component{
     constructor(props){
         super(props);
@@ -33,7 +33,7 @@ class SemesterForm extends  Component{
             }).then(res=>{
                 return res.json()
             }).then(data=>{
-                if(data.status===1){
+                if(data.status==='success'){
                     message.success(data.msg);
                     this.props.showModal();
                     this.props.loadData();
@@ -41,7 +41,8 @@ class SemesterForm extends  Component{
                     message.error(data.msg);
                 }
             })
-        });
+        })
+
     }
     startYearChange(e){
         const year = parseInt(e.target.value) || 0;
@@ -74,7 +75,6 @@ class SemesterForm extends  Component{
         };
         const {startYear,endYear} = this.state;
         const {value} = this.props;
-        console.log(this.props);
         return(
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
