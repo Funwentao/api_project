@@ -42,14 +42,18 @@ class EditForm extends Component{
                     {getFieldDecorator('oldPassword', {
                         rules: [{ required: true, message: 'Please input your UserName!' }],
                     })(
-                        <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="oldPassword" />
+                        <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                               type="password"
+                               placeholder="oldPassword" />
                     )}
                 </FormItem>
                 <FormItem>
                     {getFieldDecorator('newPassword', {
                         rules: [{ required: true, message: 'Please input your Password!' }],
                     })(
-                        <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="newPassword" />
+                        <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                               type="password"
+                               placeholder="newPassword" />
                     )}
                 </FormItem>
                 <FormItem style={{textAlign:'center'}}>
