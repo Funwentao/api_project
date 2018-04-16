@@ -21,7 +21,7 @@ class EditForm extends Component{
                     mode:'cors',
                     credentials:'include',
                     body:JSON.stringify(values)
-                }).the(res=>{
+                }).then(res=>{
                     return res.json();
                 }).then(data=>{
                     if(data.status==='success'){
