@@ -1,11 +1,31 @@
 import React,{Component} from 'react';
-import {Button,Table,message,Switch,Input} from 'antd';
+import {Button,Table,message,Switch,Input,Icon} from 'antd';
+import '../../style/signModal.scss';
 
 const Search = Input.Search;
 
 class SignModal extends Component{
     constructor(){
         super();
+        this.state={
+          signState:[0,1,2,3]
+        };
+        this.teacherChangeSign = this.teacherChangeSign.bind(this);
+        this.changeState = this.changeState.bind(this);
+    }
+    teacherChangeSign(){
+
+    }
+    changeState(string){
+        let signState ;
+        switch (string){
+            case 'all': signState = [0,1,2,3];break;
+            case 'success': signState = [3];break;
+            case 'failed': signState = [0,1,2];break;
+        }
+        this.setState({
+            signState
+        })
     }
     render(){
         const columns = [{
@@ -13,10 +33,10 @@ class SignModal extends Component{
             dataIndex: 'name'
         }, {
             title: '学号',
-            dataIndex: 'number'
+            dataIndex: 'student_num'
         }, {
             title: '班级',
-            dataIndex: 'class'
+            dataIndex: 'class_info'
         },{
             title:'签到',
             dataIndex:'sign'
@@ -24,42 +44,26 @@ class SignModal extends Component{
             title:'签到时间',
             dataIndex:'time'
         }];
-        const data = [{
-            key: '1',
-            name: 'John Brown',
-            number: 32,
-            class: '计科1班',
-            sign:<Switch/>,
-            time:'2018/1/3 5:30'
-        },  {
-            key: '2',
-            name: 'Jim Green',
-            number: 42,
-            class: '计科1班',
-            sign:<Switch/>,
-            time:'2018/1/3 5:30'
-        }, {
-            key: '3',
-            name: 'Joe Black',
-            number: 32,
-            class: '计科1班',
-            sign:<Switch/>,
-            time:'2018/1/3 5:30'
-        }, {
-            key: '4',
-            name: 'Disabled User',
-            number: 99,
-            class: '计科1班',
-            sign:<Switch/>,
-            time:'2018/1/3 5:30'
-        }];
+        const data = this.props.studentSignList.filter((e)=>{
+            return this.state.signState.indexOf(e.state)!==-1
+        }).map((e)=>{
+           return {
+               key:e.student_num,
+               student_num:e.student_num,
+               name:e.name,
+               class_info:e.class_info,
+               sign:<Switch defaultChecked={e.state===3}/>,
+               time:e.state===0?'无':new Date(e.sign_time).toLocaleString()
+           }
+        });
         return(
             <div>
                 <div className="btn-content">
-                    <Button >全部</Button>
-                    <Button type='primary'>成功</Button>
-                    <Button type='danger'>失败</Button>
+                    <Button onClick={()=>this.changeState('all')}>全部</Button>
+                    <Button type='primary' onClick={()=>this.changeState('success')}>成功</Button>
+                    <Button type='danger' onClick={()=>this.changeState('failed')}>失败</Button>
                     <Button  type="primary" ghost style={{float:'right'}}>扫描签到</Button>
+                    <Button type='primary' onClick={()=>this.props._loadStudent(this.props.week)}><Icon type="reload" /></Button>
                     <Button  type="danger" ghost style={{float:'right'}}>点名</Button>
                 </div>
                 <div style={{marginBottom:20}}>

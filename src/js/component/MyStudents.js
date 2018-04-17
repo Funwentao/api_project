@@ -128,7 +128,7 @@ class MyStudents extends Component{
                                     tips1="课程号"
                                     value1={e.courseNum}
                                     tips2="学生人数"
-                                    value2={e.studentNum}
+                                    value2={e.studentAmount}
                                     className = {className}
                                     showModal = {this.showModal}
                                     key={e.courseId}

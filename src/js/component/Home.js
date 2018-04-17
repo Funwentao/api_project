@@ -17,6 +17,7 @@ class Home extends Component{
         this.state = {
             key:'1',
             visible:false,
+            signCourseId:0
         };
         this.menuChangeHandler = this.menuChangeHandler.bind(this);
         this.showModal = this.showModal.bind(this);
@@ -45,9 +46,10 @@ class Home extends Component{
             visible:false
         })
     }
-    toggleSignDetail(){
+    toggleSignDetail(id){
         this.setState({
-            key:this.state.key==='5'?'3':'5'
+            key:this.state.key==='5'?'3':'5',
+            signCourseId:id
         })
     }
     render(){
@@ -89,7 +91,8 @@ class Home extends Component{
                             {this.state.key==='2'&&<MyStudents/>}
                             {this.state.key==='3'&&<SignRecords toggleSignDetail={this.toggleSignDetail}/>}
                             {this.state.key==='4'&&<SemesterManagement/>}
-                            {this.state.key==='5'&&<SignDetail toggleSignDetail={this.toggleSignDetail}/>}
+                            {this.state.key==='5'&&<SignDetail toggleSignDetail={this.toggleSignDetail}
+                                                               courseId={this.state.signCourseId}/>}
                         </Content>
                     </Layout>
                 </Layout>
