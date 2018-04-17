@@ -13,11 +13,12 @@ class SemesterForm extends  Component{
     constructor(props){
         super(props);
         const {value} = props;
-        const year = value.startYear||new Date().getFullYear();
+        //const year = value.startYear||new Date().getFullYear();
         this.state = {
-            startYear:year,
-            endYear:year + 1,
-            semesterId:value.semesterId||0
+            // startYear:year,
+            // endYear:year + 1,
+            // semesterId:value.semesterId||0
+            ...value
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.startYearChange = this.startYearChange.bind(this);
@@ -26,12 +27,13 @@ class SemesterForm extends  Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if(!err){
-                const url = server + (this.state.semesterId===0?'/semester':'/semester/'+this.state.semesterId);
+                const {semesterId} = this.state;
+                const url = server + (!semesterId?'/semester':'/semester/'+semesterId);
                 fetch(url,{
-                    method:this.state.semesterId===0?'post':'put',
+                    method:!semesterId?'post':'put',
                     mode: 'cors',
                     credentials:'include',
-                    body:JSON.stringify(values)
+                    body:JSON.stringify({...values,semesterId})
                 }).then(res=>{
                     return res.json()
                 }).then(data=>{
@@ -48,22 +50,28 @@ class SemesterForm extends  Component{
 
     }
     startYearChange(e){
-        const year = parseInt(e.target.value) || 0;
+        const startYear = parseInt(e.target.value) || 0;
+        const endYear = startYear + 1;
+        // let {value} = this.state;
+        // value = {...value,startYear,endYear}
         this.setState({
-            startYear:year,
-            endYear:year + 1
+            startYear,
+            endYear
         })
     }
-    componentWillReceiveProps(nextProps){
-        if(this.props.value.semesterId!==nextProps.value.semesterId){
-            const startYear = nextProps.value.startYear||new Date().getFullYear();
-            this.setState({
-                startYear:startYear,
-                endYear:startYear+1,
-                semesterId:nextProps.value.semesterId||0
-            });
-        }
-    }
+    // componentWillReceiveProps(nextProps){
+    //     //console.log(this.props.value,nextProps.value);
+    //     if(this.props.value.semesterId!==nextProps.value.semesterId){
+    //        // const startYear = nextProps.value.startYear||new Date().getFullYear();
+    //         this.forceUpdate();
+    //         this.setState({
+    //             // startYear:startYear,
+    //             // endYear:startYear+1,
+    //             // semesterId:nextProps.value.semesterId||0
+    //             ...nextProps.value
+    //         });
+    //     }
+    // }
     render(){
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
@@ -76,8 +84,9 @@ class SemesterForm extends  Component{
                 sm: { span: 19 },
             },
         };
-        const {startYear,endYear} = this.state;
-        const {value} = this.props;
+        //const {startYear,endYear} = this.state;
+        //const {value} = this.state;
+        const {startYear,endYear,num,startTime,endTime} = this.state;
         return(
             <Form onSubmit={this.handleSubmit}>
                 <FormItem
@@ -119,7 +128,7 @@ class SemesterForm extends  Component{
                     {...formItemLayout}
                 >
                     {getFieldDecorator('semester', {
-                        initialValue:value.num,
+                        initialValue:num,
                         rules: [{
                             required: true, message: 'Please input the semester!',
                         }],
@@ -135,7 +144,7 @@ class SemesterForm extends  Component{
                     {...formItemLayout}
                 >
                     {getFieldDecorator('date', {
-                        initialValue:[moment(value.startTime), moment(value.endTime)],
+                        initialValue:[moment(startTime), moment(endTime)],
                         rules: [{
                             required: true, message: 'Please input the date!',
                         }],

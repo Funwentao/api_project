@@ -4,6 +4,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 import fetch from 'isomorphic-fetch';
 import {CONFIG} from "../constants/conifg";
+import "babel-polyfill";
 const {server} = CONFIG;
 
 
@@ -12,11 +13,13 @@ class CourseForm extends Component{
         super(props);
         this.state = {
             time:props.value.time||[],
-            courseId:props.courseId||0
+            //courseId:props.courseId||0,
+            semesterList:[]
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.addTime = this.addTime.bind(this);
         this.removeTime = this.removeTime.bind(this);
+        this._loadSemester = this._loadSemester.bind(this);
     }
     handleSubmit(e){
         e.preventDefault();
@@ -43,15 +46,15 @@ class CourseForm extends Component{
                 let jsonObj = {
                     courseName:values.courseName,
                     courseNum:values.courseNum,
-                    semester: values.semester,
+                    semesterId: values.semesterId,
                     startWeek: values.startWeek,
                     endWeek:values.endWeek,
                     time:tempArray,
-                    courseId:this.state.courseId
+                    courseId:this.props.value.courseId
                 };
-                const url = server + (this.state.courseId===0?'/course':'/course/'+this.state.courseId);
+                const url = server + (!this.props.value.courseId?'/course':'/course/'+this.props.value.courseId);
                 fetch(url,{
-                    method:this.state.courseId===0?'post':'put',
+                    method:!this.props.value.courseId?'post':'put',
                     body:JSON.stringify(jsonObj),
                     mode: 'cors',
                     credentials:'include'
@@ -81,25 +84,45 @@ class CourseForm extends Component{
             time:[...time.slice(0,i),...time.slice(i+1)]
         });
     }
-    componentWillReceiveProps(nextProps){
-        if(this.props.value.courseId!==nextProps.value.courseId){
+    // componentWillReceiveProps(nextProps){
+    //     if(this.props.value.courseId!==nextProps.value.courseId){
+    //         this.setState({
+    //             time:nextProps.value.time||[]
+    //         });
+    //     }
+    // }
+    _loadSemester(){
+        const url = `${server}/semester`;
+         fetch(url,{
+            method:'get',
+            mode:'cors',
+            credentials:'include'
+        }).then(res=>{
+            return res.json();
+        }).then(data=>{
             this.setState({
-                time:nextProps.value.time||[],
-                courseId:nextProps.courseId||0
-            });
-        }
+                semesterList:data.semesterList
+            })
+        });
+    }
+    componentDidMount(){
+        this._loadSemester();
     }
     render(){
         const { getFieldDecorator } = this.props.form;
         const {value} = this.props;
         const time = this.state.time;
-        const {courseName,courseNum,endWeek,startWeek,semester} = value;
+        const {courseName,courseNum,endWeek,startWeek,semesterId} = value;
         const week =['日','一','二','三','四','五','六'];
         const array = [1,2,3,4,5,6,7,8,9,10,11,12];
         const array2 = [13,14,15,16,17,18,19,20];
         const optionGroup = array.map((e)=><Option value={e} key={e}>{e}</Option>);
         const optionGroup2 = [...array,...array2].map((e)=><Option value={e} key={e}>{e}</Option>);
         const weekGroup = week.map((e,i)=><Option value={i} key={e}>{e}</Option>);
+
+        const semesterListOption = this.state.semesterList.map((e)=>{
+            return <Option value={e.semesterId} key={e.semesterId}>{e.semesterName}</Option>
+        });
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -238,15 +261,13 @@ class CourseForm extends Component{
                     label="学期"
                     {...formItemLayout}
                 >
-                    {getFieldDecorator('semester', {
-                        initialValue:semester||'',
+                    {getFieldDecorator('semesterId', {
+                        initialValue:semesterId||'',
                         rules: [{
                             required: true, message: 'Please input the year!',
                         }],
                     })(
-                        <Select>
-                            <Option value='2017-2018'>2017-2018</Option>
-                        </Select>
+                        <Select>{semesterListOption}</Select>
                     )}
                 </FormItem>
                 <FormItem

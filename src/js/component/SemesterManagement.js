@@ -106,14 +106,14 @@ class SemesterManagement extends Component{
                         <AddCard showModal = {this.showModal}/>
                     </div>
                 </div>
-                <Modal title="学期编辑"
+                {this.state.visible&&<Modal title="学期编辑"
                        visible={this.state.visible}
                        onOk={this.handleOk}
                        onCancel={this.handleCancel}>
                     <SemesterModal value={this.state.value}
                                    showModal = {this.showModal}
                                    loadData={this._loadData}/>
-                </Modal>
+                </Modal>}
             </div>
         )
     }

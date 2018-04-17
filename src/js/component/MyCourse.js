@@ -159,19 +159,22 @@ class MyCourse extends Component{
                                     showModal = {this.showModal}
                                     id = {e.courseId}
                                     key = {e.courseId}
+                                    deleteCard={this.deleteCard}
                                 />
                             })
                         }
                     </div>
                 </div>
-                <Modal title="课程编辑"
-                       visible={this.state.visible}
-                       onOk={this.handleOk}
-                       onCancel={this.handleCancel}>
-                    <CourseModal value={this.state.value}
-                                 showModal = {this.showModal}
-                                 loadData={this._loadData}/>
-                </Modal>
+                {
+                    this.state.visible&&<Modal title="课程编辑"
+                                               visible={this.state.visible}
+                                               onOk={this.handleOk}
+                                               onCancel={this.handleCancel}>
+                        <CourseModal value={this.state.value}
+                                     showModal = {this.showModal}
+                                     loadData={this._loadData}/>
+                    </Modal>
+                }
             </div>
         )
     }
