@@ -15,11 +15,10 @@ class SignDetail extends Component{
         this.state = {
             list:[],
             studentSignList:[],
-            week:0,
             modalType:'sign',
             timeList:[],
-            time:0,
-            visible:false
+            visible:false,
+            time:0
         };
         this.showModal = this.showModal.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
@@ -29,12 +28,19 @@ class SignDetail extends Component{
         this.timeChange = this.timeChange.bind(this);
         this.createSign =this.createSign.bind(this);
         this.selectTime = this.selectTime.bind(this);
+        this._loadTime = this._loadTime.bind(this);
     }
-    showModal(week,num){
-        this._loadStudent(week,num);
+    showModal(time,num){
+        let week = 0;
+        this.state.list.forEach((e)=>{
+            if(e.courseTimeId === time){
+                week = e.week;
+            }
+        });
+        this._loadStudent(time,week,num);
         this.setState({
             visible:true,
-            week
+            time
         })
     }
     handleCancel(){
@@ -47,9 +53,10 @@ class SignDetail extends Component{
             visible:false
         })
     }
-    _loadStudent(week,num){
+    _loadStudent(time,week,num){
         const {courseId} = this.props;
-        const url = `${server}/course/${courseId}/sign/week/${week}${num?`?num=${num}`:``}`;
+        const url = `${server}/course/${courseId}/sign?time=${time}&week=${week}${num?`&num=${num}`:``}`;
+        console.log(url);
         fetch(url,{
             method:'get',
             mode:'cors',
@@ -64,7 +71,7 @@ class SignDetail extends Component{
     }
     _loadSign(){
         const {courseId} = this.props;
-        const url = server + `/course/${courseId}/sign/week`;
+        const url = server + `/course/${courseId}/sign`;
         fetch(url,{
             method:'get',
             mode:'cors',
@@ -77,8 +84,24 @@ class SignDetail extends Component{
             })
         });
     }
+    _loadTime(){
+        const {courseId} = this.props;
+        const url = server + `/course/${courseId}/time`;
+        fetch(url,{
+            method:'get',
+            mode:'cors',
+            credentials:'include'
+        }).then((res) => {
+            return res.json();
+        }).then((data) =>{
+            this.setState({
+                timeList:data.list
+            })
+        });
+    }
     componentDidMount(){
        this._loadSign();
+       this._loadTime();
     }
     selectTime(){
         this.setState({
@@ -92,20 +115,31 @@ class SignDetail extends Component{
         })
     }
     createSign(){
+        const {time} = this.state;
+        if(time===0){
+            message.error("还未选择时间");
+            return;
+        }
         const {courseId} = this.props;
-        const url = `${server}/course/${courseId}/sign/${this.state.time}`;
+        const url = `${server}/course/${courseId}/sign`;
+        const obj = {
+            courseTimeId:time
+        };
         fetch(url,{
             method:'post',
             mode:'cors',
             credentials:'include',
+            body:JSON.stringify(obj)
         }).then(res=>{
-            return res;
+            return res.json();
         }).then(data=>{
+            console.log(data);
             if(data.status==='success'){
                 this._loadSign();
                 message.success(data.msg);
                 this.setState({
-                    visible:false
+                    visible:false,
+                    modalType:'sign'
                 })
             }else{
                 message.error(data.msg);
@@ -120,7 +154,7 @@ class SignDetail extends Component{
                 </div>
                 <div style={{overflow:'hidden'}}>
                     {
-                        this.state.list.map((e)=> {
+                        this.state.list.map((e,i)=> {
                             const className = 'color' + Math.ceil(Math.random()*10);
                             return <Card
                                 name={`第${e.week}周`}
@@ -130,15 +164,15 @@ class SignDetail extends Component{
                                 value2={e.signedAmount}
                                 className = {className}
                                 showModal = {this.showModal}
-                                id={e.week}
-                                key={e.week}
+                                id={e.courseTimeId}
+                                key={i}
                             />
                         })
                     }
                     <AddCard showModal={this.selectTime}/>
                 </div>
                 {
-                    this.state.visible&&<Modal title="签到详情"
+                    this.state.visible&&<Modal title={this.state.modalType==='sign'?'签到详情':'选择时间'}
                                                visible={this.state.visible}
                                                onOk={this.handleOk}
                                                onCancel={this.handleCancel}>
@@ -147,18 +181,21 @@ class SignDetail extends Component{
                                 courseId={this.props.courseId}
                                 studentSignList={this.state.studentSignList}
                                 week={this.state.week}
+                                _loadSign={this._loadSign}
+                                showModal = {this.showModal}
+                                time = {this.state.time}
                                 _loadStudent={this._loadStudent}/>
                         }
                         {
-                            this.state.modalType==='selectTime'&&<div>
-                                <Select onChange={this.timeChange}>
+                            this.state.modalType==='selectTime'&&<div style={{textAlign:'center'}}>
+                                <Select onChange={this.timeChange} style={{width:'60%',marginBottom:20}}>
                                     {
                                         this.state.timeList.map((e)=>{
-                                            return <Option key={e.Id}>{e.time}</Option>
+                                            return <Option key={e.id} value={e.id}>{`周 ${e.courseWeekday} ${e.courseSectionStart}~${e.courseSectionEnd} 节`}</Option>
                                         })
                                     }
                                 </Select>
-                                <Button type="primary" onClick={this.createSign}>确定</Button>
+                                <Button type="primary" style={{width:'60%'}} onClick={this.createSign}>创建签到</Button>
                             </div>
                         }
                     </Modal>

@@ -16,14 +16,25 @@ class SignModal extends Component{
         this.teacherChangeSign = this.teacherChangeSign.bind(this);
         this.changeState = this.changeState.bind(this);
     }
-    teacherChangeSign(id){
+    teacherChangeSign(id,value){
         const {courseId} = this.props;
         const url = `${server}/course/${courseId}/sign/${id}`;
+        const state = value?'3':'2';
+        const obj = {
+            state
+        };
         fetch(url,{
             method:'put',
-            mode:'cors',
-            credentials:'inlcude'
-        });
+            mode: 'cors',
+            credentials:'include',
+            body:JSON.stringify(obj)
+        }).then(res=>{
+            return res.json()
+        }).then(data=>{
+            if(data.status==='success'){
+                this.props._loadSign();
+            }
+        })
     }
     changeState(string){
         let signState ;
@@ -54,7 +65,7 @@ class SignModal extends Component{
             dataIndex:'time'
         }];
         const data = this.props.studentSignList.filter((e)=>{
-            return this.state.signState.indexOf(e.state)!==-1
+            return this.state.signState.includes(e.state)
         }).map((e)=>{
            return {
                key:e.student_num,
@@ -62,7 +73,7 @@ class SignModal extends Component{
                name:e.name,
                class_info:e.class_info,
                sign:<Switch defaultChecked={e.state===3}
-                            onChange={(value)=>this.teacherChangeSign(e.id)}/>,
+                            onChange={(value)=>this.teacherChangeSign(e.id,value)}/>,
                time:e.state===0?'无':new Date(e.sign_time).toLocaleString()
            }
         });
@@ -73,13 +84,13 @@ class SignModal extends Component{
                     <Button type='primary' onClick={()=>this.changeState('success')}>成功</Button>
                     <Button type='danger' onClick={()=>this.changeState('failed')}>失败</Button>
                     <Button  type="primary" ghost style={{float:'right'}}>扫描签到</Button>
-                    <Button type='primary' onClick={()=>this.props._loadStudent(this.props.week)}><Icon type="reload" /></Button>
+                    <Button type='primary' onClick={()=>this.props.showModal(this.props.time)}><Icon type="reload" /></Button>
                     <Button  type="danger" ghost style={{float:'right'}}>点名</Button>
                 </div>
                 <div style={{marginBottom:20}}>
                     <Search
                         placeholder="input search text"
-                        onSearch={(num)=>this.props.showModal(this.props.id,num)}
+                        onSearch={(num)=>this.props.showModal(this.props.time,num)}
                         style={{ width: 300 }}
                         enterButton
                     />
