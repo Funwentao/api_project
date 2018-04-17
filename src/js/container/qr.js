@@ -1,9 +1,10 @@
 import React,{Component} from 'react';
-import ReactDOM from 'react-dom';
+import {Button} from 'antd';
 import QRcode from 'qrcode.react';
+import ReactDOM from 'react-dom';
 import '../../style/qr.scss';
 
-class Qr extends Component{
+class ScanQr extends Component{
     constructor(){
         super();
         this.state = {
@@ -20,12 +21,14 @@ class Qr extends Component{
     render(){
         const URL = 'https://api.funwt.top/sign?code=' + this.state.code;
         return(
-            <div>
-                <QRcode value={URL}  />
-                <button onClick={this.changeCode}>更换二维码</button>
+            <div className="qr-content">
+                <QRcode value={URL}  size={600}/>
+                <div className="btn-content">
+                    <Button type='primary' size="large" onClick={this.changeCode}>更换二维码</Button>
+                </div>
             </div>
         )
     }
 }
 
-ReactDOM.render(<Qr/>,document.getElementById("app"));
+ReactDOM.render(<ScanQr/>,document.getElementById("app"));

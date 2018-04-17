@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 263:
+/***/ 360:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 264:
+/***/ 361:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -27,10 +27,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ 265:
+/***/ 362:
 /***/ (function(module, exports, __webpack_require__) {
 
-var math = __webpack_require__(266);
+var math = __webpack_require__(363);
 
 function QRPolynomial(num, shift) {
 
@@ -101,7 +101,7 @@ module.exports = QRPolynomial;
 
 /***/ }),
 
-/***/ 266:
+/***/ 363:
 /***/ (function(module, exports) {
 
 var QRMath = {
@@ -152,27 +152,33 @@ module.exports = QRMath;
 
 /***/ }),
 
-/***/ 564:
+/***/ 686:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
+var _button = __webpack_require__(41);
+
+var _button2 = _interopRequireDefault(_button);
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+__webpack_require__(49);
 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(10);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _qrcode = __webpack_require__(573);
+var _qrcode = __webpack_require__(736);
 
 var _qrcode2 = _interopRequireDefault(_qrcode);
 
-__webpack_require__(581);
+var _reactDom = __webpack_require__(11);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+__webpack_require__(742);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -182,13 +188,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Qr = function (_Component) {
-    _inherits(Qr, _Component);
+var ScanQr = function (_Component) {
+    _inherits(ScanQr, _Component);
 
-    function Qr() {
-        _classCallCheck(this, Qr);
+    function ScanQr() {
+        _classCallCheck(this, ScanQr);
 
-        var _this = _possibleConstructorReturn(this, (Qr.__proto__ || Object.getPrototypeOf(Qr)).call(this));
+        var _this = _possibleConstructorReturn(this, (ScanQr.__proto__ || Object.getPrototypeOf(ScanQr)).call(this));
 
         _this.state = {
             code: 123
@@ -197,7 +203,7 @@ var Qr = function (_Component) {
         return _this;
     }
 
-    _createClass(Qr, [{
+    _createClass(ScanQr, [{
         key: 'changeCode',
         value: function changeCode() {
             var code = Math.random() * 1000;
@@ -211,25 +217,29 @@ var Qr = function (_Component) {
             var URL = 'https://api.funwt.top/sign?code=' + this.state.code;
             return _react2.default.createElement(
                 'div',
-                null,
-                _react2.default.createElement(_qrcode2.default, { value: URL }),
+                { className: 'qr-content' },
+                _react2.default.createElement(_qrcode2.default, { value: URL, size: 300 }),
                 _react2.default.createElement(
-                    'button',
-                    { onClick: this.changeCode },
-                    '\u66F4\u6362\u4E8C\u7EF4\u7801'
+                    'div',
+                    { className: 'btn-content' },
+                    _react2.default.createElement(
+                        _button2.default,
+                        { type: 'primary', onClick: this.changeCode },
+                        '\u66F4\u6362\u4E8C\u7EF4\u7801'
+                    )
                 )
             );
         }
     }]);
 
-    return Qr;
+    return ScanQr;
 }(_react.Component);
 
-_reactDom2.default.render(_react2.default.createElement(Qr, null), document.getElementById("app"));
+_reactDom2.default.render(_react2.default.createElement(ScanQr, null), document.getElementById("app"));
 
 /***/ }),
 
-/***/ 573:
+/***/ 736:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -259,9 +269,9 @@ var PropTypes = __webpack_require__(5); // qr.js doesn't handle error level of z
 // thus the deep require.
 
 
-var QRCodeImpl = __webpack_require__(576);
+var QRCodeImpl = __webpack_require__(737);
 
-var ErrorCorrectLevel = __webpack_require__(264);
+var ErrorCorrectLevel = __webpack_require__(361);
 
 function getBackingStorePixelRatio(ctx) {
   return (// $FlowFixMe
@@ -584,14 +594,14 @@ module.exports = QRCode;
 
 /***/ }),
 
-/***/ 576:
+/***/ 737:
 /***/ (function(module, exports, __webpack_require__) {
 
-var BitByte = __webpack_require__(577);
-var RSBlock = __webpack_require__(578);
-var BitBuffer = __webpack_require__(579);
-var util = __webpack_require__(580);
-var Polynomial = __webpack_require__(265);
+var BitByte = __webpack_require__(738);
+var RSBlock = __webpack_require__(739);
+var BitBuffer = __webpack_require__(740);
+var util = __webpack_require__(741);
+var Polynomial = __webpack_require__(362);
 
 function QRCode(typeNumber, errorCorrectLevel) {
 	this.typeNumber = typeNumber;
@@ -1029,10 +1039,10 @@ module.exports = QRCode;
 
 /***/ }),
 
-/***/ 577:
+/***/ 738:
 /***/ (function(module, exports, __webpack_require__) {
 
-var mode = __webpack_require__(263);
+var mode = __webpack_require__(360);
 
 function QR8bitByte(data) {
 	this.mode = mode.MODE_8BIT_BYTE;
@@ -1059,11 +1069,11 @@ module.exports = QR8bitByte;
 
 /***/ }),
 
-/***/ 578:
+/***/ 739:
 /***/ (function(module, exports, __webpack_require__) {
 
 // ErrorCorrectLevel
-var ECL = __webpack_require__(264);
+var ECL = __webpack_require__(361);
 
 function QRRSBlock(totalCount, dataCount) {
 	this.totalCount = totalCount;
@@ -1365,7 +1375,7 @@ module.exports = QRRSBlock;
 
 /***/ }),
 
-/***/ 579:
+/***/ 740:
 /***/ (function(module, exports) {
 
 function QRBitBuffer() {
@@ -1410,12 +1420,12 @@ module.exports = QRBitBuffer;
 
 /***/ }),
 
-/***/ 580:
+/***/ 741:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mode = __webpack_require__(263);
-var Polynomial = __webpack_require__(265);
-var math = __webpack_require__(266);
+var Mode = __webpack_require__(360);
+var Polynomial = __webpack_require__(362);
+var math = __webpack_require__(363);
 
 var QRMaskPattern = {
 	PATTERN000 : 0,
@@ -1696,11 +1706,11 @@ module.exports = QRUtil;
 
 /***/ }),
 
-/***/ 581:
+/***/ 742:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[564]);
+},[686]);
