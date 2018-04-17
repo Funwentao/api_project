@@ -1,7 +1,10 @@
 import React,{Component} from 'react';
-import {Button,Table,message,Switch,Input,Icon} from 'antd';
+import {Button,Table,Switch,Input,Icon} from 'antd';
 import '../../style/signModal.scss';
+import fetch from 'isomorphic-fetch';
+import {CONFIG} from "../constants/conifg";
 
+const {server} = CONFIG;
 const Search = Input.Search;
 
 class SignModal extends Component{
@@ -13,8 +16,14 @@ class SignModal extends Component{
         this.teacherChangeSign = this.teacherChangeSign.bind(this);
         this.changeState = this.changeState.bind(this);
     }
-    teacherChangeSign(){
-
+    teacherChangeSign(id){
+        const {courseId} = this.props;
+        const url = `${server}/course/${courseId}/sign/${id}`;
+        fetch(url,{
+            method:'put',
+            mode:'cors',
+            credentials:'inlcude'
+        });
     }
     changeState(string){
         let signState ;
@@ -52,7 +61,8 @@ class SignModal extends Component{
                student_num:e.student_num,
                name:e.name,
                class_info:e.class_info,
-               sign:<Switch defaultChecked={e.state===3}/>,
+               sign:<Switch defaultChecked={e.state===3}
+                            onChange={(value)=>this.teacherChangeSign(e.id)}/>,
                time:e.state===0?'无':new Date(e.sign_time).toLocaleString()
            }
         });
@@ -69,7 +79,7 @@ class SignModal extends Component{
                 <div style={{marginBottom:20}}>
                     <Search
                         placeholder="input search text"
-                        onSearch={value => console.log(value)}
+                        onSearch={(num)=>this.props.showModal(this.props.id,num)}
                         style={{ width: 300 }}
                         enterButton
                     />

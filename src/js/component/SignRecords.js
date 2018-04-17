@@ -65,10 +65,11 @@ class SignRecords extends Component{
                                     tips1="学期"
                                     value1={e.semester}
                                     tips2="学生人数"
-                                    value2={e.studentNum}
+                                    value2={e.studentAmount}
                                     className = {className}
                                     showModal = {this.props.toggleSignDetail}
                                     key={e.courseId}
+                                    id={e.courseId}
                                 />
                             })
                         }

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Modal,Icon} from 'antd';
+import {Modal,Icon,Select,Button,message} from 'antd';
 import Card from './Card';
 import SignModal from './SignModal';
 import AddCard from './AddCard';
@@ -7,6 +7,7 @@ import fetch from 'isomorphic-fetch';
 import {CONFIG} from "../constants/conifg";
 
 const {server} = CONFIG;
+const {Option} = Select;
 
 class SignDetail extends Component{
     constructor(){
@@ -14,16 +15,23 @@ class SignDetail extends Component{
         this.state = {
             list:[],
             studentSignList:[],
-            week:0
+            week:0,
+            modalType:'sign',
+            timeList:[],
+            time:0,
+            visible:false
         };
         this.showModal = this.showModal.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleOk = this.handleOk.bind(this);
         this._loadSign = this._loadSign.bind(this);
         this._loadStudent = this._loadStudent.bind(this);
+        this.timeChange = this.timeChange.bind(this);
+        this.createSign =this.createSign.bind(this);
+        this.selectTime = this.selectTime.bind(this);
     }
-    showModal(week){
-        this._loadStudent(week);
+    showModal(week,num){
+        this._loadStudent(week,num);
         this.setState({
             visible:true,
             week
@@ -72,6 +80,38 @@ class SignDetail extends Component{
     componentDidMount(){
        this._loadSign();
     }
+    selectTime(){
+        this.setState({
+            modalType:'selectTime',
+            visible:true
+        })
+    }
+    timeChange(value){
+        this.setState({
+            time:value
+        })
+    }
+    createSign(){
+        const {courseId} = this.props;
+        const url = `${server}/course/${courseId}/sign/${this.state.time}`;
+        fetch(url,{
+            method:'post',
+            mode:'cors',
+            credentials:'include',
+        }).then(res=>{
+            return res;
+        }).then(data=>{
+            if(data.status==='success'){
+                this._loadSign();
+                message.success(data.msg);
+                this.setState({
+                    visible:false
+                })
+            }else{
+                message.error(data.msg);
+            }
+        })
+    }
     render(){
         return(
             <div>
@@ -95,16 +135,34 @@ class SignDetail extends Component{
                             />
                         })
                     }
-                    <AddCard/>
+                    <AddCard showModal={this.selectTime}/>
                 </div>
-                <Modal title="签到详情"
-                       visible={this.state.visible}
-                       onOk={this.handleOk}
-                       onCancel={this.handleCancel}>
-                    <SignModal studentSignList={this.state.studentSignList}
-                               week={this.state.week}
-                               _loadStudent={this._loadStudent}/>
-                </Modal>
+                {
+                    this.state.visible&&<Modal title="签到详情"
+                                               visible={this.state.visible}
+                                               onOk={this.handleOk}
+                                               onCancel={this.handleCancel}>
+                        {
+                            this.state.modalType==='sign'&&<SignModal
+                                courseId={this.props.courseId}
+                                studentSignList={this.state.studentSignList}
+                                week={this.state.week}
+                                _loadStudent={this._loadStudent}/>
+                        }
+                        {
+                            this.state.modalType==='selectTime'&&<div>
+                                <Select onChange={this.timeChange}>
+                                    {
+                                        this.state.timeList.map((e)=>{
+                                            return <Option key={e.Id}>{e.time}</Option>
+                                        })
+                                    }
+                                </Select>
+                                <Button type="primary" onClick={this.createSign}>确定</Button>
+                            </div>
+                        }
+                    </Modal>
+                }
             </div>
 
         )
