@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --host 0.0.0.0 --port 8080 --hot --inline",
-    "webpack": "set NODE_ENV=production && webpack --config webpack.config.js"
+    "webpack": "set NODE_ENV=production && webpack --progress --config webpack.config.js",
+    "analyz": "NODE_ENV=production npm_config_report=true npm run webpack"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "sass-loader": "^6.0.7",
     "style-loader": "^0.20.3",
     "webpack": "^3.10.0",
+    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
