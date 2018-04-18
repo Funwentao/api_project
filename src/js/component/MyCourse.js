@@ -52,8 +52,8 @@ class MyCourse extends Component{
             visible:false
         })
     }
-    _loadData(){
-        const url = server + '/course';
+    _loadData(name){
+        const url = `${server}/course${name?`?name=${name}`:``}`;
         fetch(url,{
             method:'get',
             mode: 'cors',
@@ -93,7 +93,7 @@ class MyCourse extends Component{
                 <div style={{textAlign:'center'}}>
                     <Search
                         placeholder="input search text"
-                        onSearch={value => console.log(value)}
+                        onSearch={(value)=>this._loadData(value)}
                         style={{ width: 300 }}
                         enterButton
                     />

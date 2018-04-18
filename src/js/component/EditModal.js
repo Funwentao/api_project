@@ -27,7 +27,7 @@ class EditForm extends Component{
                 }).then(data=>{
                     if(data.status==='success'){
                         message.success(data.msg);
-                        this.props.showModal();
+                        this.props.handleCancel();
                     }else{
                         message.error(data.msg);
                     }

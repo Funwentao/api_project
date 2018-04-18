@@ -18,7 +18,8 @@ class SignDetail extends Component{
             modalType:'sign',
             timeList:[],
             visible:false,
-            time:0
+            time:0,
+            week:0
         };
         this.showModal = this.showModal.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
@@ -40,7 +41,8 @@ class SignDetail extends Component{
         this._loadStudent(time,week,num);
         this.setState({
             visible:true,
-            time
+            time,
+            week
         })
     }
     handleCancel(){

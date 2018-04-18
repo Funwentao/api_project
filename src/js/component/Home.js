@@ -96,12 +96,15 @@ class Home extends Component{
                         </Content>
                     </Layout>
                 </Layout>
-                <Modal title="修改密码"
+                {
+                    this.state.visible&&<Modal title="修改密码"
                        visible={this.state.visible}
                        onOk={this.handleOk}
                        onCancel={this.handleCancel}>
-                    <EditModal showModal={this.showModal}/>
+                    <EditModal showModal={this.showModal}
+                               handleCancel={this.handleCancel}/>
                 </Modal>
+                }
             </Layout>
         )
     }

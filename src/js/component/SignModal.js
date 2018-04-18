@@ -32,7 +32,9 @@ class SignModal extends Component{
             return res.json()
         }).then(data=>{
             if(data.status==='success'){
-                this.props._loadSign();
+                const {_loadSign,_loadStudent,time,week} = this.props;
+                _loadSign();
+                _loadStudent(time,week);
             }
         })
     }
