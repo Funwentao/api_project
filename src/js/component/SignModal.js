@@ -4,7 +4,7 @@ import '../../style/signModal.scss';
 import fetch from 'isomorphic-fetch';
 import {CONFIG} from "../constants/conifg";
 
-const {server} = CONFIG;
+const {server,scanUrl,signUrl} = CONFIG;
 const Search = Input.Search;
 
 class SignModal extends Component{
@@ -15,6 +15,7 @@ class SignModal extends Component{
         };
         this.teacherChangeSign = this.teacherChangeSign.bind(this);
         this.changeState = this.changeState.bind(this);
+        this.scanForSign = this.scanForSign.bind(this);
     }
     teacherChangeSign(id,value){
         const {courseId} = this.props;
@@ -48,6 +49,12 @@ class SignModal extends Component{
         this.setState({
             signState
         })
+    }
+    scanForSign(string){
+        const {time,week,courseId} = this.props;
+        const url1 = `${scanUrl}?time=${time}&week=${week}&couseId=${courseId}`;
+        const url2 = `${signUrl}?couseId=${courseId}`;
+        string === 'scan'?window.open(url1):window.open(url2);
     }
     render(){
         const columns = [{
@@ -85,13 +92,13 @@ class SignModal extends Component{
                     <Button onClick={()=>this.changeState('all')}>全部</Button>
                     <Button type='primary' onClick={()=>this.changeState('success')}>成功</Button>
                     <Button type='danger' onClick={()=>this.changeState('failed')}>失败</Button>
-                    <Button  type="primary" ghost style={{float:'right'}}>扫描签到</Button>
                     <Button type='primary' onClick={()=>this.props.showModal(this.props.time)}><Icon type="reload" /></Button>
-                    <Button  type="danger" ghost style={{float:'right'}}>点名</Button>
+                    <Button  type="primary" ghost style={{float:'right'}} onClick={()=>this.scanForSign('scan')}>扫描签到</Button>
+                    <Button  type="danger" ghost style={{float:'right'}} onClick={()=>this.scanForSign('sign')}>点名</Button>
                 </div>
                 <div style={{marginBottom:20}}>
                     <Search
-                        placeholder="input search text"
+                        placeholder="输入学号进行搜索"
                         onSearch={(num)=>this.props.showModal(this.props.time,num)}
                         style={{ width: 300 }}
                         enterButton

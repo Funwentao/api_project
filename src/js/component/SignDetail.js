@@ -58,7 +58,6 @@ class SignDetail extends Component{
     _loadStudent(time,week,num){
         const {courseId} = this.props;
         const url = `${server}/course/${courseId}/sign?time=${time}&week=${week}${num?`&num=${num}`:``}`;
-        console.log(url);
         fetch(url,{
             method:'get',
             mode:'cors',

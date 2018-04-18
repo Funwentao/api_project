@@ -92,7 +92,7 @@ class MyCourse extends Component{
             <div>
                 <div style={{textAlign:'center'}}>
                     <Search
-                        placeholder="input search text"
+                        placeholder="输入课程名进行搜索"
                         onSearch={(value)=>this._loadData(value)}
                         style={{ width: 300 }}
                         enterButton

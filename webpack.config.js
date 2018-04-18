@@ -45,10 +45,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin(),
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('production')
-        }),
+        // new webpack.optimize.UglifyJsPlugin(),
+        // new webpack.DefinePlugin({
+        //     'process.env.NODE_ENV': JSON.stringify('production')
+        // }),
         new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
         new HtmlWebpackPlugin({
             title: '二维码',
@@ -69,19 +69,20 @@ module.exports = {
             chunks:['home','vendor']
         }),
         new ExtractTextPlugin('[name].css'),
-        new BundleAnalyzerPlugin(
-            {
-                analyzerMode: 'server',
-                analyzerHost: '127.0.0.1',
-                analyzerPort: 8889,
-                reportFilename: 'report.html',
-                defaultSizes: 'parsed',
-                openAnalyzer: true,
-                generateStatsFile: false,
-                statsFilename: 'stats.json',
-                statsOptions: null,
-                logLevel: 'info'
-            }
-        ),
+        // new BundleAnalyzerPlugin(
+        //     {
+        //         analyzerMode: 'server',
+        //         analyzerHost: '127.0.0.1',
+        //         analyzerPort: 8889,
+        //         reportFilename: 'report.html',
+        //         defaultSizes: 'parsed',
+        //         openAnalyzer: true,
+        //         generateStatsFile: false,
+        //         statsFilename: 'stats.json',
+        //         statsOptions: null,
+        //         logLevel: 'info'
+        //     }
+        //    "analyz": "NODE_ENV=production npm_config_report=true npm run webpack"
+        // ),
     ]
 };
