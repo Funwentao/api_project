@@ -5,9 +5,10 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 module.exports = {
     entry: {
-        qr:'./src/js/container/qr.js',
+        qr:'./src/js/container/qr',
         login:'./src/js/container/login',
         home:'./src/js/container/HomeContainer',
+        call:'./src/js/container/call',
         vendor:['react','react-dom']
     },
     output: {
@@ -67,6 +68,12 @@ module.exports = {
             filename: '../view/home.html',
             template: './template.html',
             chunks:['home','vendor']
+        }),
+        new HtmlWebpackPlugin({
+            title: '点名',
+            filename: '../view/call.html',
+            template: './template.html',
+            chunks:['call','vendor']
         }),
         new ExtractTextPlugin('[name].css'),
         // new BundleAnalyzerPlugin(

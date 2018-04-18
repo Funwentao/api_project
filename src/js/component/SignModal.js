@@ -52,8 +52,8 @@ class SignModal extends Component{
     }
     scanForSign(string){
         const {time,week,courseId} = this.props;
-        const url1 = `${scanUrl}?time=${time}&week=${week}&couseId=${courseId}`;
-        const url2 = `${signUrl}?couseId=${courseId}`;
+        const url1 = `${scanUrl}?time=${time}&week=${week}&courseId=${courseId}`;
+        const url2 = `${signUrl}?courseId=${courseId}`;
         string === 'scan'?window.open(url1):window.open(url2);
     }
     render(){
@@ -94,7 +94,7 @@ class SignModal extends Component{
                     <Button type='danger' onClick={()=>this.changeState('failed')}>失败</Button>
                     <Button type='primary' onClick={()=>this.props.showModal(this.props.time)}><Icon type="reload" /></Button>
                     <Button  type="primary" ghost style={{float:'right'}} onClick={()=>this.scanForSign('scan')}>扫描签到</Button>
-                    <Button  type="danger" ghost style={{float:'right'}} onClick={()=>this.scanForSign('sign')}>点名</Button>
+                    <Button  type="danger" ghost style={{float:'right'}} onClick={()=>this.scanForSign('call')}>点名</Button>
                 </div>
                 <div style={{marginBottom:20}}>
                     <Search

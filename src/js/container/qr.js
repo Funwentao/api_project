@@ -3,6 +3,7 @@ import {Button} from 'antd';
 import QRcode from 'qrcode.react';
 import ReactDOM from 'react-dom';
 import '../../style/qr.scss';
+import urlQuery from '../tool/urlQuery';
 
 class ScanQr extends Component{
     constructor(){
@@ -17,6 +18,11 @@ class ScanQr extends Component{
         this.setState({
             code
         });
+    }
+    componentDidMount(){
+        const url = location.href;
+        const {time,week,courseId} = urlQuery(url);
+        console.log(time,week,courseId);
     }
     render(){
         const URL = 'https://api.funwt.top/sign?code=' + this.state.code;
