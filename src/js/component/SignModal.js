@@ -11,7 +11,8 @@ class SignModal extends Component{
     constructor(){
         super();
         this.state={
-          signState:[0,1,2,3]
+            signState:[0,1,2,3],
+            filter:'all'
         };
         this.teacherChangeSign = this.teacherChangeSign.bind(this);
         this.changeState = this.changeState.bind(this);
@@ -47,7 +48,8 @@ class SignModal extends Component{
             case 'failed': signState = [0,1,2];break;
         }
         this.setState({
-            signState
+            signState,
+            filter:string
         })
     }
     scanForSign(string){
@@ -73,8 +75,9 @@ class SignModal extends Component{
             title:'签到时间',
             dataIndex:'time'
         }];
+        const {filter,signState} = this.state;
         const data = this.props.studentSignList.filter((e)=>{
-            return this.state.signState.includes(e.state)
+            return signState.includes(e.state)
         }).map((e)=>{
            return {
                key:e.student_num,
@@ -89,12 +92,12 @@ class SignModal extends Component{
         return(
             <div>
                 <div className="btn-content">
-                    <Button onClick={()=>this.changeState('all')}>全部</Button>
-                    <Button type='primary' onClick={()=>this.changeState('success')}>成功</Button>
-                    <Button type='danger' onClick={()=>this.changeState('failed')}>失败</Button>
+                    <Button type={filter==='all'?'primary':'default'} ghost={filter === 'all'} onClick={()=>this.changeState('all')}>全部</Button>
+                    <Button type={filter==='success'?'primary':'default'} onClick={()=>this.changeState('success')}>成功</Button>
+                    <Button type={filter==='failed'?'danger':'default'} onClick={()=>this.changeState('failed')}>失败</Button>
                     <Button type='primary' onClick={()=>this.props.showModal(this.props.time)}><Icon type="reload" /></Button>
-                    <Button  type="primary" ghost style={{float:'right'}} onClick={()=>this.scanForSign('scan')}>扫描签到</Button>
-                    <Button  type="danger" ghost style={{float:'right'}} onClick={()=>this.scanForSign('call')}>点名</Button>
+                    <Button type="primary" ghost style={{float:'right'}} onClick={()=>this.scanForSign('scan')}>扫描签到</Button>
+                    <Button type="danger" ghost style={{float:'right'}} onClick={()=>this.scanForSign('call')}>点名</Button>
                 </div>
                 <div style={{marginBottom:20}}>
                     <Search
