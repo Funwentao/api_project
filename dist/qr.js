@@ -24,7 +24,7 @@ exports.default = function (string) {
 
 /***/ }),
 
-/***/ 368:
+/***/ 369:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -37,7 +37,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 369:
+/***/ 370:
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -51,10 +51,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ 370:
+/***/ 371:
 /***/ (function(module, exports, __webpack_require__) {
 
-var math = __webpack_require__(371);
+var math = __webpack_require__(372);
 
 function QRPolynomial(num, shift) {
 
@@ -125,7 +125,7 @@ module.exports = QRPolynomial;
 
 /***/ }),
 
-/***/ 371:
+/***/ 372:
 /***/ (function(module, exports) {
 
 var QRMath = {
@@ -176,25 +176,25 @@ module.exports = QRMath;
 
 /***/ }),
 
-/***/ 599:
+/***/ 600:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _button = __webpack_require__(30);
+var _button = __webpack_require__(31);
 
 var _button2 = _interopRequireDefault(_button);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-__webpack_require__(35);
+__webpack_require__(36);
 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _qrcode = __webpack_require__(651);
+var _qrcode = __webpack_require__(652);
 
 var _qrcode2 = _interopRequireDefault(_qrcode);
 
@@ -202,7 +202,7 @@ var _reactDom = __webpack_require__(11);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-__webpack_require__(657);
+__webpack_require__(658);
 
 var _urlQuery2 = __webpack_require__(215);
 
@@ -279,7 +279,7 @@ _reactDom2.default.render(_react2.default.createElement(ScanQr, null), document.
 
 /***/ }),
 
-/***/ 651:
+/***/ 652:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -309,9 +309,9 @@ var PropTypes = __webpack_require__(4); // qr.js doesn't handle error level of z
 // thus the deep require.
 
 
-var QRCodeImpl = __webpack_require__(652);
+var QRCodeImpl = __webpack_require__(653);
 
-var ErrorCorrectLevel = __webpack_require__(369);
+var ErrorCorrectLevel = __webpack_require__(370);
 
 function getBackingStorePixelRatio(ctx) {
   return (// $FlowFixMe
@@ -634,14 +634,14 @@ module.exports = QRCode;
 
 /***/ }),
 
-/***/ 652:
+/***/ 653:
 /***/ (function(module, exports, __webpack_require__) {
 
-var BitByte = __webpack_require__(653);
-var RSBlock = __webpack_require__(654);
-var BitBuffer = __webpack_require__(655);
-var util = __webpack_require__(656);
-var Polynomial = __webpack_require__(370);
+var BitByte = __webpack_require__(654);
+var RSBlock = __webpack_require__(655);
+var BitBuffer = __webpack_require__(656);
+var util = __webpack_require__(657);
+var Polynomial = __webpack_require__(371);
 
 function QRCode(typeNumber, errorCorrectLevel) {
 	this.typeNumber = typeNumber;
@@ -1079,10 +1079,10 @@ module.exports = QRCode;
 
 /***/ }),
 
-/***/ 653:
+/***/ 654:
 /***/ (function(module, exports, __webpack_require__) {
 
-var mode = __webpack_require__(368);
+var mode = __webpack_require__(369);
 
 function QR8bitByte(data) {
 	this.mode = mode.MODE_8BIT_BYTE;
@@ -1109,11 +1109,11 @@ module.exports = QR8bitByte;
 
 /***/ }),
 
-/***/ 654:
+/***/ 655:
 /***/ (function(module, exports, __webpack_require__) {
 
 // ErrorCorrectLevel
-var ECL = __webpack_require__(369);
+var ECL = __webpack_require__(370);
 
 function QRRSBlock(totalCount, dataCount) {
 	this.totalCount = totalCount;
@@ -1415,7 +1415,7 @@ module.exports = QRRSBlock;
 
 /***/ }),
 
-/***/ 655:
+/***/ 656:
 /***/ (function(module, exports) {
 
 function QRBitBuffer() {
@@ -1460,12 +1460,12 @@ module.exports = QRBitBuffer;
 
 /***/ }),
 
-/***/ 656:
+/***/ 657:
 /***/ (function(module, exports, __webpack_require__) {
 
-var Mode = __webpack_require__(368);
-var Polynomial = __webpack_require__(370);
-var math = __webpack_require__(371);
+var Mode = __webpack_require__(369);
+var Polynomial = __webpack_require__(371);
+var math = __webpack_require__(372);
 
 var QRMaskPattern = {
 	PATTERN000 : 0,
@@ -1746,11 +1746,11 @@ module.exports = QRUtil;
 
 /***/ }),
 
-/***/ 657:
+/***/ 658:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ })
 
-},[599]);
+},[600]);

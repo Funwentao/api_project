@@ -1,18 +1,18 @@
 webpackJsonp([3],{
 
-/***/ 1179:
+/***/ 1180:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _button = __webpack_require__(30);
+var _button = __webpack_require__(31);
 
 var _button2 = _interopRequireDefault(_button);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-__webpack_require__(35);
+__webpack_require__(36);
 
 var _react = __webpack_require__(0);
 
@@ -26,9 +26,15 @@ var _urlQuery2 = __webpack_require__(215);
 
 var _urlQuery3 = _interopRequireDefault(_urlQuery2);
 
-var _isomorphicFetch = __webpack_require__(38);
+var _isomorphicFetch = __webpack_require__(39);
 
 var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+var _conifg = __webpack_require__(29);
+
+var _StudentCard = __webpack_require__(1181);
+
+var _StudentCard2 = _interopRequireDefault(_StudentCard);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38,34 +44,71 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var server = _conifg.CONFIG.server;
+
 var NameForCall = function (_Component) {
     _inherits(NameForCall, _Component);
 
     function NameForCall() {
         _classCallCheck(this, NameForCall);
 
-        return _possibleConstructorReturn(this, (NameForCall.__proto__ || Object.getPrototypeOf(NameForCall)).call(this));
+        var _this = _possibleConstructorReturn(this, (NameForCall.__proto__ || Object.getPrototypeOf(NameForCall)).call(this));
+
+        _this.state = {
+            studentList: [{
+                name: "方文涛",
+                studentNumber: 2014150283
+            }]
+        };
+        _this._loadStudents = _this._loadStudents.bind(_this);
+        return _this;
     }
 
     _createClass(NameForCall, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            var url = location.href;
+        key: '_loadStudents',
+        value: function _loadStudents() {
+            var _this2 = this;
 
-            var _urlQuery = (0, _urlQuery3.default)(url),
+            var _location = location,
+                href = _location.href;
+
+            var _urlQuery = (0, _urlQuery3.default)(href),
                 courseId = _urlQuery.courseId;
 
-            console.log(courseId);
+            var url = server + '/courseId/' + courseId + '/student';
+            (0, _isomorphicFetch2.default)(url, {
+                method: 'get',
+                mode: 'cors',
+                credentials: 'include'
+            }).then(function (res) {
+                return res.json();
+            }).then(function (data) {
+                _this2.setState({
+                    studentList: data.studentList
+                });
+            });
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            //this._loadStudents();
         }
     }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                null,
+                { style: { textAlign: "center" } },
+                _react2.default.createElement(
+                    'div',
+                    { style: { marginBottom: 20 } },
+                    this.state.studentList.map(function (e) {
+                        return _react2.default.createElement(_StudentCard2.default, { name: e.name, studentNumber: e.studentNumber, key: e.studentNumber });
+                    })
+                ),
                 _react2.default.createElement(
                     _button2.default,
-                    { type: 'primary' },
+                    { type: 'primary', size: 'large', onClick: this._loadStudents },
                     '\u91CD\u65B0\u900910\u4E2A\u5B66\u751F'
                 )
             );
@@ -76,6 +119,54 @@ var NameForCall = function (_Component) {
 }(_react.Component);
 
 _reactDom2.default.render(_react2.default.createElement(NameForCall, null), document.getElementById("app"));
+
+/***/ }),
+
+/***/ 1181:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (props) {
+    var i = Math.ceil(Math.random() * 10);
+    var color = 'color' + i;
+    return _react2.default.createElement(
+        'div',
+        { className: 'student-card ' + color },
+        _react2.default.createElement(
+            'p',
+            { className: 'name' },
+            props.name
+        ),
+        _react2.default.createElement(
+            'p',
+            { className: 'number' },
+            props.studentNumber
+        )
+    );
+};
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+__webpack_require__(1182);
+
+__webpack_require__(312);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
+/***/ 1182:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -571,7 +662,31 @@ exports.default = function (string) {
 
 /***/ }),
 
-/***/ 38:
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var CONFIG = exports.CONFIG = {
+    server: location.port === "8080" ? 'http://172.29.108.123:8080/sign/v1' : 'http://172.29.108.123:8088/sign/v1',
+    scanUrl: 'qr.html',
+    signUrl: 'call.html'
+};
+
+/***/ }),
+
+/***/ 312:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 39:
 /***/ (function(module, exports, __webpack_require__) {
 
 // the whatwg-fetch polyfill installs the fetch() function
@@ -584,4 +699,4 @@ module.exports = self.fetch.bind(self);
 
 /***/ })
 
-},[1179]);
+},[1180]);

@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {Icon} from 'antd';
 import '../../style/card.scss';
+import '../../style/color.scss';
 
 class Card extends Component{
     constructor(){
