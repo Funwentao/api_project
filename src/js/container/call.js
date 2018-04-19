@@ -7,6 +7,8 @@ import {CONFIG} from "../constants/conifg";
 import StudentCard from '../component/StudentCard';
 import "../../style/call.scss"
 
+const {href} = location;
+const {courseId,week,time} = urlQuery(href);
 const {server}  = CONFIG;
 
 class NameForCall extends Component{
@@ -16,7 +18,8 @@ class NameForCall extends Component{
             left:20,
             studentList:[{
                 name:"方文涛",
-                studentNumber:2014150283
+                studentNumber:2014150283,
+                sign:'success'
             },{
                 name:"方文涛",
                 studentNumber:2014150281
@@ -50,8 +53,6 @@ class NameForCall extends Component{
         this.move = this.move.bind(this);
     }
     _loadStudents(){
-        const {href} = location;
-        const {courseId} = urlQuery(href);
         const url = `${server}/courseId/${courseId}/student`;
         fetch(url,{
             method:'get',
@@ -67,6 +68,14 @@ class NameForCall extends Component{
     }
     componentDidMount(){
         //this._loadStudents();
+        document.onkeyup=(e)=>{
+            console.log(e);
+            switch (e.keyCode){
+                case 39:this.move(13);break;
+                case 37:this.move(-13);break;
+                default:break;
+            }
+        }
     }
     move(value){
         let {left} = this.state;
@@ -109,6 +118,7 @@ class NameForCall extends Component{
                                     return <StudentCard name={e.name}
                                                         color = {color}
                                                         studentNumber={e.studentNumber}
+                                                        sign={e.sign}
                                                         key={e.studentNumber}/>
                                 })
                             }

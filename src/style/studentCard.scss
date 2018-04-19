@@ -1,14 +1,35 @@
 .student-card{
-   width: 500px;
-   height: 312px;
-   border-radius: 10px;
-   color: white;
-   font-weight: bold;
-   font-size: 40px;
-   padding-top: 68px;
-   box-sizing: border-box;
-   display: inline-block;
-   margin: 10px;
-   box-shadow: 0 0 15px black;
-   cursor: pointer;
+  width: 500px;
+  height: 312px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  font-size: 40px;
+  padding-top: 68px;
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 10px;
+  box-shadow: 0 0 15px black;
+  cursor: pointer;
+  position: relative;
+  .tips{
+    position: absolute;
+    width: 162px;
+    height: 0px;
+    border: 32px solid white;
+    border-color: transparent transparent white transparent;
+    transform: rotate(45deg);
+    top: -1px;
+    right: -50px;
+    font-size: 16px;
+    .info{
+      margin-top: 5px;
+    }
+  }
+  .success{
+    color: #52c41a;
+  }
+  .failed{
+    color: #cf1322;
+  }
  }

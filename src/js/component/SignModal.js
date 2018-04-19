@@ -55,7 +55,7 @@ class SignModal extends Component{
     scanForSign(string){
         const {time,week,courseId} = this.props;
         const url1 = `${scanUrl}?time=${time}&week=${week}&courseId=${courseId}`;
-        const url2 = `${signUrl}?courseId=${courseId}`;
+        const url2 = `${signUrl}?courseId=${courseId}&time=${time}&week=${week}`;
         string === 'scan'?window.open(url1):window.open(url2);
     }
     render(){
