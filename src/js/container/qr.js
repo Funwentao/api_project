@@ -14,7 +14,9 @@ class ScanQr extends Component{
         this.state = {
             code:123,
             opacity:1,
-            opacity2:0
+            opacity2:0,
+            fontSize:0,
+            show:true
         };
         this.endSign = this.endSign.bind(this);
     }
@@ -39,17 +41,22 @@ class ScanQr extends Component{
             }
         });
         */
-        let {opacity,opacity2} = this.state;
+        let {opacity,opacity2,fontSize} = this.state;
         const clearId = setInterval(()=>{
             if(opacity>0){
                 opacity -= 0.05;
                 opacity2 += 0.05;
+                fontSize += 10
                 console.log(opacity);
                 this.setState({
                     opacity,
-                    opacity2
+                    opacity2,
+                    fontSize
                 });
             }else{
+                this.setState({
+                   show:false
+                });
                 clearInterval(clearId);
             }
         },50);
@@ -59,15 +66,18 @@ class ScanQr extends Component{
     }
     render(){
         const URL = 'https://api.funwt.top/sign?code=' + this.state.code;
+        const {opacity,opacity2,fontSize,show} = this.state;
         return(
             <div  className="container">
-                <div className="qr-content" style={{opacity:this.state.opacity}}>
-                    <QRcode value={URL}  size={600}/>
-                    <div className="btn-content">
-                        <Button type='primary' size="large" onClick={this.endSign}>结束签到</Button>
+                {
+                    show&&<div className="qr-content" style={{opacity}}>
+                        <QRcode value={URL}  size={600}/>
+                        <div className="btn-content">
+                            <Button type='primary' size="large" onClick={this.endSign}>结束签到</Button>
+                        </div>
                     </div>
-                </div>
-                <div className="bg-tips" style={{opacity:this.state.opacity2}}>已结束</div>
+                }
+                <div className="bg-tips" style={{opacity:opacity2,fontSize:fontSize}}>已结束</div>
             </div>
         )
     }

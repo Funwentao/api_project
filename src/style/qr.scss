@@ -2,6 +2,7 @@
   position:relative;
   width: 600px;
   margin: 50px auto;
+  height: 695px;
   .qr-content{
     .btn-content{
       margin-top: 50px;
@@ -10,8 +11,10 @@
   }
   .bg-tips{
     position: absolute;
-    top:0;
+    top:50%;
+    transform: translateY(-50%);
     left: 0;
-    font-size: 200px;
+    text-align: center;
+    width: 600px;
   }
 }
