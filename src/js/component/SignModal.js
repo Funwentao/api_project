@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Button,Table,Switch,Input,Icon} from 'antd';
+import {Button,Table,Switch,Input,Icon,message} from 'antd';
 import '../../style/signModal.scss';
 import fetch from 'isomorphic-fetch';
 import {CONFIG} from "../constants/conifg";
@@ -53,10 +53,38 @@ class SignModal extends Component{
         })
     }
     scanForSign(string){
-        const {time,week,courseId} = this.props;
-        const url1 = `${scanUrl}?time=${time}&week=${week}&courseId=${courseId}`;
+        const {time,week,courseId,signId} = this.props;
+        const url1 = `${scanUrl}?time=${time}&week=${week}&courseId=${courseId}&signId=${signId}`;
         const url2 = `${signUrl}?courseId=${courseId}&time=${time}&week=${week}`;
-        string === 'scan'?window.open(url1):window.open(url2);
+        switch (string){
+            case "scan":
+                /*
+                const url = `${server}/course/${courseId}/sign/${signId}/link`;
+                const obj = {
+                    start:1
+                };
+                fetch(url,{
+                    method:'post',
+                    mode: 'cors',
+                    credentials:'include',
+                    body:JSON.stringify(obj)
+                }).then(res=>{
+                    return res.json()
+                }).then(data=>{
+                    if(data.status==='success'){
+                        window.open(url1);
+                    }else{
+                        message.error(data.msg);
+                    }
+                });
+                */
+                window.open(url1);
+                break;
+            case "call":
+                window.open(url2);
+                break;
+            default:break;
+        }
     }
     render(){
         const columns = [{

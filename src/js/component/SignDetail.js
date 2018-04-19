@@ -19,7 +19,8 @@ class SignDetail extends Component{
             timeList:[],
             visible:false,
             time:0,
-            week:0
+            week:0,
+            signId:0
         };
         this.showModal = this.showModal.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
@@ -66,7 +67,8 @@ class SignDetail extends Component{
             return res.json();
         }).then((data) =>{
             this.setState({
-                studentSignList:data.list
+                studentSignList:data.list,
+                signId:data.signId
             })
         });
     }
@@ -185,6 +187,7 @@ class SignDetail extends Component{
                                 _loadSign={this._loadSign}
                                 showModal = {this.showModal}
                                 time = {this.state.time}
+                                signId={this.state.signId}
                                 _loadStudent={this._loadStudent}/>
                         }
                         {

@@ -16,60 +16,58 @@ class NameForCall extends Component{
         super();
         this.state = {
             left:20,
-            studentList:[{
-                name:"方文涛",
-                studentNumber:2014150283,
-                sign:'success'
-            },{
-                name:"方文涛",
-                studentNumber:2014150281
-            },{
-                name:"方文涛",
-                studentNumber:2014150282
-            },{
-                name:"方文涛",
-                studentNumber:2014150280
-            },{
-                name:"方文涛",
-                studentNumber:2014150284
-            },{
-                name:"方文涛",
-                studentNumber:2014150285
-            },{
-                name:"方文涛",
-                studentNumber:2014150286
-            },{
-                name:"方文涛",
-                studentNumber:2014150287
-            },{
-                name:"方文涛",
-                studentNumber:2014150288
-            },{
-                name:"方文涛",
-                studentNumber:2014150289
-            }]
+            studentList:[]
         };
         this._loadStudents = this._loadStudents.bind(this);
         this.move = this.move.bind(this);
     }
+    teacherChangeSign(id,value){
+        const url = `${server}/course/${courseId}/sign/${id}`;
+        const state = value!==3?3:2;
+        const obj = {
+            state
+        };
+        fetch(url,{
+            method:'put',
+            mode: 'cors',
+            credentials:'include',
+            body:JSON.stringify(obj)
+        }).then(res=>{
+            return res.json()
+        }).then(data=>{
+            let {studentList} = this.state;
+            let index = 0;
+            studentList.forEach((e,i)=>{
+                if(e.id===id){
+                    index = i;
+                }
+            });
+            const obj = {...studentList[index],state:value!==3?3:2};
+            studentList = [...studentList.slice(0,index),obj,...studentList.slice(index+1)];
+            if(data.status==='success'){
+                this.setState({
+                    studentList
+                })
+            }
+        })
+    }
     _loadStudents(){
-        const url = `${server}/courseId/${courseId}/student`;
+        const url = `${server}/course/${courseId}/sign?time=${time}&week=${week}&amount=10`;
         fetch(url,{
             method:'get',
             mode:'cors',
             credentials:'include'
-        }).then(res=>{
-            return res.json()
-        }).then(data=>{
+        }).then((res) => {
+            return res.json();
+        }).then((data) =>{
             this.setState({
-                studentList:data.studentList
+                studentList:data.list
             })
-        })
+        });
     }
     componentDidMount(){
-        //this._loadStudents();
+        this._loadStudents();
         document.onkeyup=(e)=>{
-            console.log(e);
             switch (e.keyCode){
                 case 39:this.move(13);break;
                 case 37:this.move(-13);break;
@@ -117,9 +115,10 @@ class NameForCall extends Component{
                                     const color = `color${i}`;
                                     return <StudentCard name={e.name}
                                                         color = {color}
-                                                        studentNumber={e.studentNumber}
-                                                        sign={e.sign}
-                                                        key={e.studentNumber}/>
+                                                        studentNumber={e.student_num}
+                                                        sign={e.state}
+                                                        teacherChangeSign={()=>this.teacherChangeSign(e.id,e.state)}
+                                                        key={e.student_num}/>
                                 })
                             }
                         </div>

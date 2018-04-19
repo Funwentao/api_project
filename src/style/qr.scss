@@ -1,9 +1,17 @@
-.qr-content{
-  canvas{
-    display: block;
-    margin: 50px auto;
+.container{
+  position:relative;
+  width: 600px;
+  margin: 50px auto;
+  .qr-content{
+    .btn-content{
+      margin-top: 50px;
+      text-align: center;
+    }
   }
-  .btn-content{
-    text-align: center;
+  .bg-tips{
+    position: absolute;
+    top:0;
+    left: 0;
+    font-size: 200px;
   }
 }

@@ -10,7 +10,7 @@ class StudentCard extends React.Component{
             sign:props.sign
         }
     }
-    componentWillRecieveProps(nextProps){
+    componentWillReceiveProps(nextProps){
         this.setState({
             sign:nextProps.sign
         })
@@ -19,9 +19,9 @@ class StudentCard extends React.Component{
        const {color,sign} = this.state;
        const {name,studentNumber} = this.props;
        return(
-           <div className={`student-card ${color}`}>
-               <div className={"tips "+(sign==='success'?"success":"failed")}>
-                   <div className="info">{sign==='success'?"Success":"Failed"}</div>
+           <div className={`student-card ${color}`} onClick={this.props.teacherChangeSign}>
+               <div className={"tips "+(sign===3?"success":"failed")}>
+                   <div className="info">{sign===3?"Success":"Failed"}</div>
                </div>
                <p className="name">{name}</p>
                <p className="number">{studentNumber}</p>
