@@ -43,7 +43,8 @@ class SignDetail extends Component{
         this.setState({
             visible:true,
             time,
-            week
+            week,
+            modalType:'sign'
         })
     }
     handleCancel(){

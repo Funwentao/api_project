@@ -58,26 +58,6 @@ class SignModal extends Component{
         const url2 = `${signUrl}?courseId=${courseId}&time=${time}&week=${week}`;
         switch (string){
             case "scan":
-                /*
-                const url = `${server}/course/${courseId}/sign/${signId}/link`;
-                const obj = {
-                    start:1
-                };
-                fetch(url,{
-                    method:'post',
-                    mode: 'cors',
-                    credentials:'include',
-                    body:JSON.stringify(obj)
-                }).then(res=>{
-                    return res.json()
-                }).then(data=>{
-                    if(data.status==='success'){
-                        window.open(url1);
-                    }else{
-                        message.error(data.msg);
-                    }
-                });
-                */
                 window.open(url1);
                 break;
             case "call":
