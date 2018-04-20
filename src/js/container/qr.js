@@ -9,7 +9,6 @@ import {CONFIG} from "../constants/conifg"
 const url = location.href;
 const {time,week,courseId,signId} = urlQuery(url);
 const {server} = CONFIG;
-
 let ws = null;
 let websocketLink = '';
 
@@ -47,7 +46,7 @@ class ScanQr extends Component{
                     if(opacity>0){
                         opacity -= 0.05;
                         opacity2 += 0.05;
-                        fontSize += 10
+                        fontSize += 10;
                         console.log(opacity);
                         this.setState({
                             opacity,
