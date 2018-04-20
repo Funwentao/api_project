@@ -1,6 +1,15 @@
-.qr-content canvas {
-  display: block;
-  margin: 50px auto; }
-
-.qr-content .btn-content {
-  text-align: center; }
+.container {
+  position: relative;
+  width: 600px;
+  margin: 50px auto;
+  height: 695px; }
+  .container .qr-content .btn-content {
+    margin-top: 50px;
+    text-align: center; }
+  .container .bg-tips {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    text-align: center;
+    width: 600px; }

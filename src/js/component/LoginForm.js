@@ -3,7 +3,7 @@ import { Form, Icon, Input, Button,message} from 'antd';
 import fetch from 'isomorphic-fetch';
 import "../../style/login.scss";
 import {CONFIG} from "../constants/conifg"
-const {server} = CONFIG;
+const {server,homeUrl} = CONFIG;
 
 
 const FormItem = Form.Item;
@@ -32,7 +32,7 @@ class NormalLoginForm extends Component {
                     return res.json();
                 }).then((data) =>{
                     if(data.status === "success"){
-                        location.href = "home.html";
+                        location.href = homeUrl;
                         localStorage.setItem("username",values.username);
                     }else{
                         message.error(data.msg);

@@ -19,9 +19,15 @@ export default function (Router) {
      * 首页
      */
     router.get('/home',async(ctx,next)=>{
-
+        await ctx.render('home');
     });
 
+    /**
+     * 点名
+     */
+    router.get('/call',async(ctx,next)=>{
+        await ctx.render('call');
+    });
 
     return router.routes();
 }
