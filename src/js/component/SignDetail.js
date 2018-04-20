@@ -161,7 +161,7 @@ class SignDetail extends Component{
                         this.state.list.map((e,i)=> {
                             const className = 'color' + Math.ceil(Math.random()*10);
                             return <Card
-                                name={`第${e.week}周`}
+                                name={`第${e.week}周 ${e.weekday}`}
                                 tips1="学生人数"
                                 value1={e.amount}
                                 tips2="签到成功"

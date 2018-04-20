@@ -69,8 +69,8 @@ class NameForCall extends Component{
         this._loadStudents();
         document.onkeyup=(e)=>{
             switch (e.keyCode){
-                case 39:this.move(13);break;
-                case 37:this.move(-13);break;
+                case 39:this.move(-13);break;
+                case 37:this.move(13);break;
                 default:break;
             }
         }
@@ -105,8 +105,8 @@ class NameForCall extends Component{
         return(
             <div className="container">
                 <div className="slider-container">
-                    <a href="javascript:;" className="left-button" onClick={()=>this.move(-13)}><Icon type="left" /></a>
-                    <a href="javascript:;" className="right-button" onClick={()=>this.move(13)}><Icon type="right" /></a>
+                    <a href="javascript:;" className="left-button" onClick={()=>this.move(13)}><Icon type="left" /></a>
+                    <a href="javascript:;" className="right-button" onClick={()=>this.move(-13)}><Icon type="right" /></a>
                     <div className="slider">
                         <div className="card-container" style={{left:left}}>
                             {
