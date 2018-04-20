@@ -7,6 +7,11 @@ import {CONFIG} from "../constants/conifg";
 import StudentCard from '../component/StudentCard';
 import "../../style/call.scss"
 
+
+
+const {loginUrl} = CONFIG;
+!localStorage.getItem("username")&&(location.href = loginUrl);
+
 const {href} = location;
 const {courseId,week,time} = urlQuery(href);
 const {server}  = CONFIG;

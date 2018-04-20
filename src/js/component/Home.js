@@ -9,6 +9,7 @@ import SemesterManagement from './SemesterManagement';
 import SignDetail from './SignDetail';
 import '../../style/home.scss';
 
+
 const { Header, Content, Sider } = Layout;
 
 class Home extends Component{

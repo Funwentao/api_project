@@ -32,7 +32,8 @@ class NormalLoginForm extends Component {
                     return res.json();
                 }).then((data) =>{
                     if(data.status === "success"){
-                        location.href = "home.html"
+                        location.href = "home.html";
+                        localStorage.setItem("username",values.username);
                     }else{
                         message.error(data.msg);
                     }

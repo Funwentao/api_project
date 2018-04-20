@@ -4,8 +4,10 @@ import QRcode from 'qrcode.react';
 import ReactDOM from 'react-dom';
 import '../../style/qr.scss';
 import urlQuery from '../tool/urlQuery';
-import {CONFIG} from "../constants/conifg"
+import {CONFIG} from "../constants/conifg";
 
+const {loginUrl} = CONFIG;
+!localStorage.getItem("username")&&(location.href = loginUrl);
 const url = location.href;
 const {time,week,courseId,signId} = urlQuery(url);
 const {server} = CONFIG;

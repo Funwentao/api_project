@@ -21,6 +21,7 @@ export default function MyHeader(props){
                 return res.json();
             }).then(data=>{
                if(data.status==='success'){
+                   localStorage.removeItem("username");
                    location.href = 'login.html'
                } else{
                    message.error(data.msg);
