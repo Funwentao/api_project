@@ -30,8 +30,8 @@ app
     console.error('ERROR:',e);
 }
 
-app.listen(8080,'0.0.0.0',()=>{
-    console.log('server running on port 8080');
+app.listen(4000,'0.0.0.0',()=>{
+    console.log('server running on port 4000');
 })
 
 })();
