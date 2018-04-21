@@ -20,7 +20,10 @@ class SignDetail extends Component{
             visible:false,
             time:0,
             week:0,
-            signId:0
+            signId:0,
+            startWeek:0,
+            endWeek:0,
+            weekNum:0
         };
         this.showModal = this.showModal.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
@@ -31,6 +34,8 @@ class SignDetail extends Component{
         this.createSign =this.createSign.bind(this);
         this.selectTime = this.selectTime.bind(this);
         this._loadTime = this._loadTime.bind(this);
+        this.downLoadExel = this.downLoadExel.bind(this);
+        this.weekChange = this.weekChange.bind(this);
     }
     showModal(time,num){
         let week = 0;
@@ -99,7 +104,9 @@ class SignDetail extends Component{
             return res.json();
         }).then((data) =>{
             this.setState({
-                timeList:data.list
+                timeList:data.list,
+                startWeek:data.startWeek,
+                endWeek:data.endWeek
             })
         });
     }
@@ -118,16 +125,26 @@ class SignDetail extends Component{
             time:value
         })
     }
+    weekChange(value){
+        this.setState({
+            weekNum:value
+        })
+    }
     createSign(){
-        const {time} = this.state;
+        const {time,weekNum} = this.state;
         if(time===0){
             message.error("还未选择时间");
+            return;
+        }
+        if(weekNum===0){
+            message.error("还未选择第几周");
             return;
         }
         const {courseId} = this.props;
         const url = `${server}/course/${courseId}/sign`;
         const obj = {
-            courseTimeId:time
+            courseTimeId:time,
+            week:weekNum
         };
         fetch(url,{
             method:'post',
@@ -150,11 +167,16 @@ class SignDetail extends Component{
             }
         })
     }
+    downLoadExel(){
+        const {courseId} = this.props;
+        window.open(`${server}/course/${courseId}/sign/download`);
+    }
     render(){
         return(
             <div>
                 <div style={{marginBottom:10}}>
                     <a href="javascript:;" onClick={this.props.toggleSignDetail} style={{fontSize:24}}><Icon type="arrow-left" /></a>
+                    <Button type="primary" onClick={this.downLoadExel} style={{float:"right"}}>导出签到记录</Button>
                 </div>
                 <div style={{overflow:'hidden'}}>
                     {
@@ -198,6 +220,18 @@ class SignDetail extends Component{
                                         this.state.timeList.map((e)=>{
                                             return <Option key={e.id} value={e.id}>{`周 ${e.courseWeekday} ${e.courseSectionStart}~${e.courseSectionEnd} 节`}</Option>
                                         })
+                                    }
+                                </Select>
+                                <Select onChange={this.weekChange} style={{width:'60%',marginBottom:20}}>
+                                    {
+                                        (()=>{
+                                            const {startWeek,endWeek} = this.state;
+                                            let array = [];
+                                            for(let i = startWeek;i<=endWeek;i++){
+                                                array.push(<Option key={i} value={i}>第{i}周</Option>);
+                                            }
+                                            return array
+                                        })()
                                     }
                                 </Select>
                                 <Button type="primary" style={{width:'60%'}} onClick={this.createSign}>创建签到</Button>
