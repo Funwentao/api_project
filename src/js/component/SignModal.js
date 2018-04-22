@@ -103,7 +103,7 @@ class SignModal extends Component{
                     <Button type={filter==='all'?'primary':'default'} ghost={filter === 'all'} onClick={()=>this.changeState('all')}>全部</Button>
                     <Button type={filter==='success'?'primary':'default'} onClick={()=>this.changeState('success')}>成功</Button>
                     <Button type={filter==='failed'?'danger':'default'} onClick={()=>this.changeState('failed')}>失败</Button>
-                    <Button type='primary' onClick={()=>this.props.showModal(this.props.time)}><Icon type="reload" /></Button>
+                    <Button type='primary' onClick={()=>this.props.showModal(this.props.time,this.props.week)}><Icon type="reload" /></Button>
                     <Button type="primary" ghost style={{float:'right'}} onClick={()=>this.scanForSign('scan')}>扫描签到</Button>
                     <Button type="danger" ghost style={{float:'right'}} onClick={()=>this.scanForSign('call')}>点名</Button>
                 </div>
