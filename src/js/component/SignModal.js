@@ -110,7 +110,7 @@ class SignModal extends Component{
                 <div style={{marginBottom:20}}>
                     <Search
                         placeholder="输入学号进行搜索"
-                        onSearch={(num)=>this.props.showModal(this.props.time,num)}
+                        onSearch={(num)=>this.props.showModal(this.props.time,this.props.week,num)}
                         style={{ width: 300 }}
                         enterButton
                     />

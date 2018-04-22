@@ -53,5 +53,25 @@ export default function(Router){
         await sql.stopTransaction();
     });
 
+    /**
+     * 判断是否和微信号绑定
+     */
+    router.get('/user/isExist',async(ctx,next)=>{
+        const {openid} = ctx.request.query;
+        await sql.startTransaction();
+        const user = await sql.executeTransaction("select * from user where open_id = ?;", [openid]);
+        if(!user.length){
+            ctx.body = {
+                status:"failed",
+                msg:"尚未绑定"
+            }
+        }else{
+            ctx.body = {
+                status:"success",
+                msg:"已绑定"
+            }
+        }
+        await sql.stopTransaction();
+    });
     return router.routes();
 }

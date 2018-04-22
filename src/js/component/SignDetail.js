@@ -37,13 +37,7 @@ class SignDetail extends Component{
         this.downLoadExel = this.downLoadExel.bind(this);
         this.weekChange = this.weekChange.bind(this);
     }
-    showModal(time,num){
-        let week = 0;
-        this.state.list.forEach((e)=>{
-            if(e.courseTimeId === time){
-                week = e.week;
-            }
-        });
+    showModal(time,week,num){
         this._loadStudent(time,week,num);
         this.setState({
             visible:true,
@@ -189,7 +183,7 @@ class SignDetail extends Component{
                                 tips2="签到成功"
                                 value2={e.signedAmount}
                                 className = {className}
-                                showModal = {this.showModal}
+                                showModal = {(id)=>this.showModal(id,e.week)}
                                 id={e.courseTimeId}
                                 key={i}
                             />
