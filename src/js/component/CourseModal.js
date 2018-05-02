@@ -34,7 +34,7 @@ class CourseForm extends Component{
                 };
                 tempArray.push(obj);
                 const {length} = this.state.time;
-                for(let i = 1,j=2;i<length;i++){
+                for(let i = 1,j=2;i<length;i++,j++){
                     let obj = {
                         loc: values["address"+j],
                         weekday: values["week_number"+j],
